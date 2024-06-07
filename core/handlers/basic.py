@@ -76,6 +76,7 @@ async def determineCityByGeo(message: Message, state: FSMContext):
                          f'{message.location.latitude}\r\n{message.location.longitude}', reply_markup=gеt_go_menu_location_keyboard())
     last_location = message
 
+
 @router.callback_query(F.data=="nextPet")
 async def nextPet(call: CallbackQuery, state: FSMContext):
     await call.message.edit_reply_markup()
