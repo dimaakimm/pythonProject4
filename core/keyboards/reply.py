@@ -1,6 +1,6 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, KeyboardButtonPollType
 from aiogram.utils.keyboard import ReplyKeyboardBuilder
-
+from aiogram.types.web_app_info import WebAppInfo
 reply_keyboard = ReplyKeyboardMarkup(keyboard=[
     [
         KeyboardButton(
@@ -34,7 +34,7 @@ reply_keyboard = ReplyKeyboardMarkup(keyboard=[
 
 def get_reply_keyboard():
     keyboard_builder = ReplyKeyboardBuilder()
-    keyboard_builder.button(text='Button 1')
+    keyboard_builder.button(text='Button 1', web_app=WebAppInfo(url='https://dimaakimm.github.io/telegramweb/'))
     keyboard_builder.button(text='Button 2')
     keyboard_builder.button(text='Button 3')
     keyboard_builder.button(text='Send geolocation', request_location=True)

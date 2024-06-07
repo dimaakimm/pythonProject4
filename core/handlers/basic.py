@@ -1,4 +1,5 @@
 import random
+import json
 from aiogram import Bot, F, Router
 from aiogram.types import Message
 from core.keyboards.inline import get_inline_choose_pet_keyboard, get_inline_start_keyboard, gеt_go_menu_keyboard, gеt_go_menu_location_keyboard
@@ -9,6 +10,7 @@ from aiogram.types import CallbackQuery
 from aiogram.fsm.state import State, StatesGroup
 from core.parser.parser import Client
 from core.settings import settings
+from aiogram.types import Message, LabeledPrice, PreCheckoutQuery, ContentType
 
 bot = Bot(token=settings.bots.bot_token, parse_mode='HTML')
 router = Router()
@@ -30,6 +32,10 @@ async def stopBot():
 @router.startup()
 async def startBot():
     await bot.send_message(settings.bots.admin_id, text='Bot is on!')
+
+@router.message(Command(commands=['help']))
+async def cmdStart(message: Message):
+    await message.answer(f'<b>Привет, {message.from_user.first_name}!\nМожешь ознакомиться с нашим проектом)</b>)', reply_markup=get_reply_keyboard())
 
 @router.message(Command(commands=['start', 'run']))
 async def cmdStart(message: Message):
@@ -107,6 +113,12 @@ async def goMenuFromPets(call: CallbackQuery):
     await call.message.answer(
         f'<b>Снова привет, {call.message.from_user.first_name}!\nМожешь ознакомиться с нашим проектом)</b>',
         reply_markup=get_inline_start_keyboard())
+
+@router.message(F.content_types == ContentType.WEB_APP_DATA)
+async def getWebAppData(message: Message):
+    res = json.loads(message.web_app_data.data)
+    await message.answer(f'Name: {res["forename"]}\nSurname: {res["surname"]}\nEmail: {res["email"]}\nPhone number: {res["phonenumber"]}')
+
 
 async def next_pet(call: CallbackQuery):
     i = random.randint(0,29)
