@@ -29,23 +29,8 @@ reply_keyboard = ReplyKeyboardMarkup(keyboard=[
     ]
 ], resize_keyboard=True, one_time_keyboard=True, input_field_placeholder="Choose btn", selective=True)
 
-loc_tel_poll_keyboard = ReplyKeyboardMarkup(keyboard=[
-    [
-        KeyboardButton(
-            text='Send geolocation',
-            request_location=True
-        ),
-        KeyboardButton(
-            text='Send phone number',
-            request_contact=True
-        ),
-        KeyboardButton(
-            text='Send poll',
-            request_poll=KeyboardButtonPollType(type='quiz')
-        )
-    ]
-],resize_keyboard=True, one_time_keyboard=False, input_field_placeholder='Send smth!'
-)
+
+
 
 def get_reply_keyboard():
     keyboard_builder = ReplyKeyboardBuilder()

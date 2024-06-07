@@ -5,6 +5,8 @@ def get_inline_start_keyboard():
     keyboard_builder = InlineKeyboardBuilder()
     keyboard_builder.button(text='О нас', callback_data='aboutUs')
     keyboard_builder.button(text='Посмотреть питомцев', callback_data='choosePet')
+    keyboard_builder.button(text='Сделать пожертвование', callback_data='donate')
+    keyboard_builder.button(text='Отправить геолокацию', callback_data='sendGeo')
     keyboard_builder.adjust(1)
     return keyboard_builder.as_markup(one_time_keyboard=True)
 def get_inline_choose_pet_keyboard():
@@ -15,8 +17,14 @@ def get_inline_choose_pet_keyboard():
     keyboard_builder.adjust(2)
 
     return keyboard_builder.as_markup(one_time_keyboard=True)
-def get_inline_info_keyboard():
+def gеt_go_menu_keyboard():
     keyboard_builder = InlineKeyboardBuilder()
     keyboard_builder.button(text='Назад', callback_data='goMenu')
+    keyboard_builder.adjust(1)
+    return keyboard_builder.as_markup(one_time_keyboard=True)
+
+def gеt_go_menu_location_keyboard():
+    keyboard_builder = InlineKeyboardBuilder()
+    keyboard_builder.button(text='В меню', callback_data='goMenuLocation')
     keyboard_builder.adjust(1)
     return keyboard_builder.as_markup(one_time_keyboard=True)
