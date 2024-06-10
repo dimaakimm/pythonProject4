@@ -3,9 +3,11 @@ import asyncio
 import logging
 from core.handlers.basic import router
 from core.settings import settings
+from aiogram.client.bot import DefaultBotProperties
+from aiogram.enums import ParseMode
 
 dp = Dispatcher()
-bot = Bot(token=settings.bots.bot_token, parse_mode='HTML')
+bot = Bot(token=settings.bots.bot_token, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
 async def start():
     try:
         dp.include_router(router)

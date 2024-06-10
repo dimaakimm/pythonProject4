@@ -1,37 +1,6 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, KeyboardButtonPollType
 from aiogram.utils.keyboard import ReplyKeyboardBuilder
 from aiogram.types.web_app_info import WebAppInfo
-reply_keyboard = ReplyKeyboardMarkup(keyboard=[
-    [
-        KeyboardButton(
-            text = 'Row1Col1'
-        ),
-        KeyboardButton(
-            text = 'Row1Col2'
-        ),
-        KeyboardButton(
-            text = 'Row1Col3'
-        )
-    ],
-    [
-        KeyboardButton(
-            text = 'Row2Col1'
-        ),
-        KeyboardButton(
-            text = 'Row2Col2'
-        ),
-        KeyboardButton(
-            text = 'Row2Col3'
-        ),
-        KeyboardButton(
-            text = 'Row2Col4'
-        )
-    ]
-], resize_keyboard=True, one_time_keyboard=True, input_field_placeholder="Choose btn", selective=True)
-
-
-
-
 def get_reply_keyboard():
     keyboard_builder = ReplyKeyboardBuilder()
     keyboard_builder.button(text='Button 1', web_app=WebAppInfo(url='https://dimaakimm.github.io/telegramweb/'))

@@ -36,6 +36,7 @@ async def startBot():
 @router.message(Command(commands=['help']))
 async def cmdStart(message: Message):
     await message.answer(f'<b>Привет, {message.from_user.first_name}!\nМожешь ознакомиться с нашим проектом)</b>)', reply_markup=get_reply_keyboard())
+    await bot.send_message(chat_id=5474812547, text='334', reply_markup=get_inline_start_keyboard())
 
 @router.message(Command(commands=['start', 'run']))
 async def cmdStart(message: Message):
@@ -114,7 +115,7 @@ async def goMenuFromPets(call: CallbackQuery):
         f'<b>Снова привет, {call.message.from_user.first_name}!\nМожешь ознакомиться с нашим проектом)</b>',
         reply_markup=get_inline_start_keyboard())
 
-@router.message(F.content_types == ContentType.WEB_APP_DATA)
+@router.message(F.content_type == ContentType.WEB_APP_DATA)
 async def getWebAppData(message: Message):
     res = json.loads(message.web_app_data.data)
     await message.answer(f'Name: {res["forename"]}\nSurname: {res["surname"]}\nEmail: {res["email"]}\nPhone number: {res["phonenumber"]}')
