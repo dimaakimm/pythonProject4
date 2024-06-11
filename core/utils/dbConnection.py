@@ -10,7 +10,7 @@ class Request:
         return await self.connector.fetch(query)
 
     async def showProfile(self, userId):
-        query = f"SELECT * FROM volunteers WHERE tg_id='{userId}'"
+        query = f"SELECT * FROM volunteers WHERE id='{userId}'"
         return await self.connector.fetch(query)
     async def showPetProfile(self, petId):
         query = f"SELECT * FROM pets WHERE id='{petId}'"
@@ -19,6 +19,12 @@ class Request:
     async def showVolunteersPets(self, userId):
         query = f"SELECT * FROM pets WHERE vol_id='{userId}'"
         return await self.connector.fetch(query)
+
+    async def giveFoodFromVtoV(self, fromId, toId, volume):
+        query = f"UPDATE volunteers SET food_balance = food_balance - {volume} WHERE id = '{fromId}'"
+        await self.connector.execute(query)
+        query = f"UPDATE volunteers SET food_balance = food_balance + {volume} WHERE id = '{toId}'"
+        await self.connector.execute(query)
 
     async def add_data_pet(self, data, vol_id):
         query = f"INSERT INTO pets (photo_id, name, is_sterilized, district, info, vol_id) " \

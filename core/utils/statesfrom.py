@@ -8,3 +8,8 @@ class VolStepsFormAddPet(StatesGroup):
     GET_STERILIZED = State()
     GET_DISTRICT = State()
     GET_CONFIRM = State()
+
+class VolFriends(StatesGroup):
+    GET_PROFILE = State()
+    GET_PHOTO = State()
+    GIVE_FOOD = State()

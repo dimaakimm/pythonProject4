@@ -1,8 +1,23 @@
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
+def gеt_accept_keyboard(fromId, toId, volume):
+    keyboard_builder = InlineKeyboardBuilder()
+    keyboard_builder.button(text='Согласиться', callback_data=f'accept{fromId}-{toId}-{volume}')
+    keyboard_builder.button(text='Отказать', callback_data=f'decline{fromId}-{toId}')
+    keyboard_builder.button(text='Назад', callback_data='goMenu')
+    keyboard_builder.adjust(2)
+    return keyboard_builder.as_markup(one_time_keyboard=True)
+
 def gеt_pet_keyboard(pet_id):
     keyboard_builder = InlineKeyboardBuilder()
     keyboard_builder.button(text='Удалить питомца', callback_data=f'petDelete{pet_id}')
+    keyboard_builder.button(text='Назад', callback_data='goMenu')
+    keyboard_builder.adjust(1)
+    return keyboard_builder.as_markup(one_time_keyboard=True)
+
+def gеt_volunteer_keyboard():
+    keyboard_builder = InlineKeyboardBuilder()
+    keyboard_builder.button(text='Передать корм', callback_data=f'volGiveFood')
     keyboard_builder.button(text='Назад', callback_data='goMenu')
     keyboard_builder.adjust(1)
     return keyboard_builder.as_markup(one_time_keyboard=True)
@@ -12,6 +27,8 @@ def getInlineStartKeyBoard():
     keyboard_builder.button(text='Показать профиль', callback_data='showProfile')
     keyboard_builder.button(text='Добавить питомца', callback_data='addPet')
     keyboard_builder.button(text='Показать питомцев', callback_data='showPets')
+    keyboard_builder.button(text='Найти волонтера', callback_data='findProfile')
+
     keyboard_builder.adjust(1)
     return keyboard_builder.as_markup(one_time_keyboard=True)
 
