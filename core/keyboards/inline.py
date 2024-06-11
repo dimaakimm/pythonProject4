@@ -1,32 +1,29 @@
-from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.utils.keyboard import InlineKeyboardBuilder
-from aiogram.types.web_app_info import WebAppInfo
-def get_inline_start_keyboard():
+
+def gеt_pet_keyboard(pet_id):
     keyboard_builder = InlineKeyboardBuilder()
-    keyboard_builder.button(text='О нас', callback_data='aboutUs')
-    keyboard_builder.button(text='Посмотреть питомцев', callback_data='choosePet')
-    keyboard_builder.button(text='Сделать пожертвование', callback_data='donate')
-    keyboard_builder.button(text='Отправить геолокацию', callback_data='sendGeo')
+    keyboard_builder.button(text='Удалить питомца', callback_data=f'petDelete{pet_id}')
+    keyboard_builder.button(text='Назад', callback_data='goMenu')
     keyboard_builder.adjust(1)
     return keyboard_builder.as_markup(one_time_keyboard=True)
-def get_inline_choose_pet_keyboard():
+def getInlineStartKeyBoard():
     keyboard_builder = InlineKeyboardBuilder()
-    keyboard_builder.button(text='Задать вопрос', callback_data='askAboutPet')
-    keyboard_builder.button(text='Следующий', callback_data='nextPet')
-    keyboard_builder.button(text='Назад', callback_data='goMenuFromPets')
-    keyboard_builder.adjust(2)
+    keyboard_builder.button(text='Получить данные заявок на корм', callback_data='getAllRequest')
+    keyboard_builder.button(text='Показать профиль', callback_data='showProfile')
+    keyboard_builder.button(text='Добавить питомца', callback_data='addPet')
+    keyboard_builder.button(text='Показать питомцев', callback_data='showPets')
+    keyboard_builder.adjust(1)
+    return keyboard_builder.as_markup(one_time_keyboard=True)
 
+
+def getInlineKeyboardPet(allRequests):
+    keyboard_builder = InlineKeyboardBuilder()
+    for record in allRequests:
+        keyboard_builder.button(text=record['name'], callback_data=f"showAPet{record['id']}")
+    keyboard_builder.adjust(1)
     return keyboard_builder.as_markup(one_time_keyboard=True)
 def gеt_go_menu_keyboard():
     keyboard_builder = InlineKeyboardBuilder()
     keyboard_builder.button(text='Назад', callback_data='goMenu')
-    keyboard_builder.adjust(1)
-    return keyboard_builder.as_markup(one_time_keyboard=True)
-
-def gеt_go_menu_location_keyboard():
-    keyboard_builder = InlineKeyboardBuilder()
-    keyboard_builder.button(text='Заявка', web_app=WebAppInfo(url='https://dimaakimm.github.io/telegramweb/'))
-    keyboard_builder.button(text='Сайт', web_app=WebAppInfo(url='https://urbananimal.ru/nakormi'))
-    keyboard_builder.button(text='В меню', callback_data='goMenuLocation')
     keyboard_builder.adjust(1)
     return keyboard_builder.as_markup(one_time_keyboard=True)
