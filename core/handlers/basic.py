@@ -6,6 +6,13 @@ from core.keyboards.inline import getInlineStartVolunteerKeyBoard, gеtStartKeyb
 from aiogram.types import CallbackQuery
 router = Router()
 
+
+# some useful commands
+@router.message(Command(commands=['get_photo_id']))
+async def get_photo_id(message: Message):
+    await message.answer(message.photo[-1].file_id)
+
+
 @router.message(Command(commands=['start']))
 async def startBotMessage(message: Message):
     await message.answer(f'Привет, {message.from_user.first_name}!\nВойди как админ/волонтер!))',
