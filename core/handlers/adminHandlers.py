@@ -21,21 +21,21 @@ async def userSettingsMenu(call: CallbackQuery):
 @router.callback_query(F.data == "deleteAdmin")
 async def getdeletedAdminId(call: CallbackQuery, state: FSMContext):
     await state.set_state(DeletingAdminSteps.GET_ID)
-    await call.answer(text="Пришлите id админа которого хотите удалить", reply_markup=getGoAdminMenyKeyBoard())
+    await call.message.answer(text="Пришлите id админа которого хотите удалить", reply_markup=getGoAdminMenyKeyBoard())
 
-@router.callback_query(DeletingAdminSteps.GET_ID, F.text)
+@router.message(DeletingAdminSteps.GET_ID, F.text)
 async def deleteAdmin(message: Message, state: FSMContext, request: Request):
     await state.set_state(None)
-    await request.delete_data_volunteers(message.from_user.text)
+    await request.delete_data_admin(message.text)
     await message.answer(text="Удален!", reply_markup=getInlineStartAdminKeyBoard())
 
 @router.callback_query(F.data == "deleteVolunteer")
 async def getdeletedAdminId(call: CallbackQuery, state: FSMContext):
     await state.set_state(DeletingVolunteerSteps.GET_ID)
-    await call.answer(text="Пришлите id админа которого хотите удалить", reply_markup=getGoAdminMenyKeyBoard())
+    await call.message.answer(text="Пришлите id админа которого хотите удалить", reply_markup=getGoAdminMenyKeyBoard())
 
-@router.callback_query(DeletingVolunteerSteps.GET_ID, F.text)
+@router.message(DeletingVolunteerSteps.GET_ID, F.text)
 async def deleteAdmin(message: Message, state: FSMContext, request: Request):
     await state.set_state(None)
-    await request.delete_data_volunteers(message.from_user.text)
+    await request.delete_data_volunteers(message.text)
     await message.answer(text="Удален!", reply_markup=getInlineStartAdminKeyBoard())
