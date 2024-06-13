@@ -161,3 +161,4 @@ async def stepVolunteerGetPhone(message: Message, state: FSMContext, request: Re
                          f'Корма на руках: {user_data["volunteer_balance"]}\n', reply_markup=getGoAdmiMenyKeyBoard()
                          )
     await state.clear()
+
