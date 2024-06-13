@@ -1,9 +1,9 @@
 from aiogram import Bot, F, Router
-from pythonProject4.core.utils.dbConnection import Request
-from pythonProject4.core.keyboards.inline import gеt_go_menu_keyboard, petCreateSuccesfulKeyBoard
+from core.utils.dbConnection import Request
+from core.keyboards.inline import gеt_go_menu_keyboard, petCreateSuccesfulKeyBoard
 from aiogram.types import CallbackQuery, Message
 from aiogram.fsm.context import FSMContext
-from pythonProject4.core.utils.stateForms import VolStepsFormAddPet
+from core.utils.stateForms import VolStepsFormAddPet
 
 
 router = Router()

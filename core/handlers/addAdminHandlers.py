@@ -1,8 +1,8 @@
 from aiogram import Router, F
 from aiogram.types import Message, CallbackQuery
 from aiogram.fsm.context import FSMContext
-from pythonProject4.core.utils.stateForms import CreatingAdminSteps
-from pythonProject4.core.utils.dbConnection import Request
+from core.utils.stateForms import CreatingAdminSteps
+from core.utils.dbConnection import Request
 
 router = Router()
 

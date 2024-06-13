@@ -1,8 +1,8 @@
 from aiogram import F, Router
 from aiogram.types import Message
-from pythonProject4.core.utils.dbConnection import Request
+from core.utils.dbConnection import Request
 from aiogram.filters import Command
-from pythonProject4.core.keyboards.inline import getInlineStartVolunteerKeyBoard, gеtStartKeyboard, getInlineStartAdminKeyBoard
+from core.keyboards.inline import getInlineStartVolunteerKeyBoard, gеtStartKeyboard, getInlineStartAdminKeyBoard
 from aiogram.types import CallbackQuery
 router = Router()
 

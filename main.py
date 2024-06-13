@@ -3,15 +3,13 @@ import asyncpg
 from aiogram import Bot, Dispatcher, Router
 from core.settings import settings
 from core.middlewares.db import DbSession
-from core.handlers import (basic, volunteerHandlers, adminHandlers, addPetHandlers,
-                           addAdminHandlers, addVolunteerHandlers, volunteerFriendsHandlers)
+from core.handlers import basic, volunteerHandlers, adminHandlers, addPetHandlers, addAdminHandlers, addVolunteerHandlers, volunteerFriendsHandlers
 import logging
 
 
 async def start():
     dp = Dispatcher()
-    bot = Bot(token=settings.bots.bot_token)
-    bot.parse_mode = 'HTML'
+    bot = Bot(token=settings.bots.bot_token, parse_mode='HTML')
     try:
         dp.include_router(basic.router)
         dp.include_router(adminHandlers.router)

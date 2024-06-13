@@ -1,9 +1,9 @@
 from aiogram import Bot, F, Router
-from pythonProject4.core.utils.dbConnection import Request
-from pythonProject4.core.keyboards.inline import getInlineStartVolunteerKeyBoard, gеt_go_menu_keyboard, getInlineKeyboardPet, gеt_pet_keyboard, gеt_volunteer_keyboard, gеt_accept_keyboard, gеtStartKeyboard, getInlineStartAdminKeyBoard
+from core.utils.dbConnection import Request
+from core.keyboards.inline import getInlineStartVolunteerKeyBoard, gеt_go_menu_keyboard, getInlineKeyboardPet, gеt_pet_keyboard, gеt_volunteer_keyboard, gеt_accept_keyboard, gеtStartKeyboard, getInlineStartAdminKeyBoard
 from aiogram.types import CallbackQuery, Message
 from aiogram.fsm.context import FSMContext
-from pythonProject4.core.utils.stateForms import VolStepsFormAddPet, VolFriends
+from core.utils.stateForms import VolStepsFormAddPet, VolFriends
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
 

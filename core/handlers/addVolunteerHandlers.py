@@ -1,9 +1,9 @@
 from aiogram import Router, F
 from aiogram.types import Message, CallbackQuery
 from aiogram.fsm.context import FSMContext
-from pythonProject4.core.utils.stateForms import CreatingVolunteerSteps
-from pythonProject4.core.utils.dbConnection import Request
-from pythonProject4.core.keyboards.inline import getGoAdminMenyKeyBoard
+from core.utils.stateForms import CreatingVolunteerSteps
+from core.utils.dbConnection import Request
+from core.keyboards.inline import getGoAdminMenyKeyBoard
 
 router = Router()
 
