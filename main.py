@@ -4,6 +4,7 @@ from aiogram import Bot, Dispatcher, Router
 from core.settings import settings
 from core.middlewares.db import DbSession
 from core.handlers import basic, volunteerHandlers, adminHandlers, addPetHandlers, addAdminHandlers, addVolunteerHandlers, volunteerFriendsHandlers, volunteerOrder
+from core.handlers import basic, volunteerHandlers, adminHandlers, addPetHandlers, addAdminHandlers, addVolunteerHandlers, volunteerFriendsHandlers, takeFoodHandlers
 import logging
 
 
@@ -19,6 +20,7 @@ async def start():
         dp.include_router(addVolunteerHandlers.router)
         dp.include_router(volunteerFriendsHandlers.router)
         dp.include_router(volunteerOrder.router)
+        dp.include_router(takeFoodHandlers.router)
         pool_connect = await asyncpg.create_pool(host='monorail.proxy.rlwy.net', user='postgres', password='IKfsvJGKGPofJfuUSOHyUaeXCNcATpYh',
                                                  database='railway', port=37016, command_timeout=60)
         dp.update.middleware.register(DbSession(pool_connect))

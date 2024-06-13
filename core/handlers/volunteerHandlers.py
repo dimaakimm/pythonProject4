@@ -10,7 +10,8 @@ router = Router()
 
 
 @router.callback_query(F.data == "goVolunteerMenu")
-async def goVolunteerMenu(call: CallbackQuery):
+async def goVolunteerMenu(call: CallbackQuery, state: FSMContext):
+    await state.set_state(None)
     await call.message.answer(f'<b>Ты в главном меню</b>',
                               reply_markup=getInlineStartVolunteerKeyBoard())
 

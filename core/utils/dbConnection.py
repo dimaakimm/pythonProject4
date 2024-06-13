@@ -12,6 +12,7 @@ class Request:
     async def showProfile(self, userId):
         query = f"SELECT * FROM volunteers WHERE id='{userId}'"
         return await self.connector.fetch(query)
+
     async def showPetProfile(self, petId):
         query = f"SELECT * FROM pets WHERE id='{petId}'"
         return await self.connector.fetch(query)
@@ -40,7 +41,7 @@ class Request:
     async def add_data_pet(self, data, vol_id):
         query = f"INSERT INTO pets (photo_id, name, is_sterilized, district, info, vol_id) " \
                 f"VALUES('{data['photo_id']}', '{data['name']}', " \
-                 f"'{data['is_sterilized']}', '{data['district']}', '{data['info']}', '{vol_id}') "
+                f"'{data['is_sterilized']}', '{data['district']}', '{data['info']}', '{vol_id}') "
         await self.connector.execute(query)
 
     async def delete_data_pet(self, petId):
@@ -95,7 +96,7 @@ class Request:
                 f"VALUES('{data['volunteer_id']}', '{data['volunteer_first_name']}', '{data['volunteer_last_name']}', '{data['volunteer_email']}','{data['volunteer_phone']}', '{data['volunteer_photo_id']}', '{data['volunteer_passport']}', '{data['volunteer_balance']}') "
         await self.connector.execute(query)
 
-
-
-
-
+    async def addNewOrder(self, idVolunteer, data):
+        query = f"INSERT INTO orders (volunteer_id, raw_cat_food, raw_dog_food, dry_dog_food, dry_cat_food, photo)" \
+                f"VALUES('{idVolunteer}', '{data['raw_cat_food']}', '{data['raw_dog_food']}', '{data['dry_dog_food']}', '{data['dry_cat_food']}', '{data['photo_id']}')"
+        await self.connector.execute(query)
