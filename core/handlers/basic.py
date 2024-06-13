@@ -15,7 +15,7 @@ async def startBotMessage(message: Message):
 @router.callback_query(F.data == 'loginAsAdmin')
 async def loginAsAdmin(call: CallbackQuery, request: Request):
     if(await request.varifyAdmin(call.from_user.id) == False):
-        await call.message.answer(f'Привет, {call.message.from_user.first_name}!\nЭто админ бот, который поможет тебе '
+        await call.message.answer(f'Привет, {call.from_user.first_name}!\nЭто админ бот, который поможет тебе '
                          f'обрабатывать заявки пользователей, желающих покормить животных!))',
                          reply_markup=getInlineStartAdminKeyBoard())
     else:
@@ -25,7 +25,7 @@ async def loginAsAdmin(call: CallbackQuery, request: Request):
 @router.callback_query(F.data == 'loginAsVolunteer')
 async def loginAsVolunteer(call: CallbackQuery, request: Request):
     if (await request.varifyVolunteer(call.from_user.id)):
-        await call.message.answer(f'<b>Привет, {call.message.from_user.first_name}!\nТы вошел как волонтер!</b>)', reply_markup=getInlineStartVolunteerKeyBoard())
+        await call.message.answer(f'<b>Привет, {call.from_user.first_name}!\nТы вошел как волонтер!</b>)', reply_markup=getInlineStartVolunteerKeyBoard())
     else:
         await call.message.answer(f'Тебя нет в списке волонтеров(',
                                   reply_markup=gеtStartKeyboard())

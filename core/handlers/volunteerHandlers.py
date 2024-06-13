@@ -36,7 +36,7 @@ async def showAPet(call: CallbackQuery, request: Request):
 
 
 @router.callback_query(F.data.startswith('petDelete'))
-async def petDelete(call: CallbackQuery, request: Request):
+async def petDelete(call: CallbackQuery, request: Request, state: FSMContext):
     pet_id = call.data[9:]
     await request.delete_data_pet(pet_id)
     await call.message.answer(text="Удален!", reply_markup=gеt_go_menu_keyboard())

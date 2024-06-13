@@ -36,3 +36,9 @@ class CreatingVolunteerSteps(StatesGroup):
     GET_PHOTO_ID = State()
     GET_BALANCE = State()
     DONE = State()
+
+class DeletingVolunteerSteps(StatesGroup):
+   GET_ID = State()
+
+class DeletingAdminSteps(StatesGroup):
+   GET_ID = State()

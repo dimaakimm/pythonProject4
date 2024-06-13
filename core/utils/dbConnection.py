@@ -36,6 +36,14 @@ class Request:
         query = f"DELETE FROM pets  WHERE id = '{petId}'"
         await self.connector.execute(query)
 
+    async def delete_data_admin(self, adminId):
+        query = f"DELETE FROM admins WHERE id = '{adminId}'"
+        await self.connector.execute(query)
+
+    async def delete_data_volunteers(self, volunteersId):
+        query = f"DELETE FROM volunteers WHERE id = '{volunteersId}'"
+        await self.connector.execute(query)
+
     async def varifyAdmin(self, candidateId):
         query = f"SELECT EXISTS(SELECT 1 FROM admins WHERE id='{candidateId}')"
         result = await self.connector.fetchval(query)
