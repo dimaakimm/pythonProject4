@@ -24,7 +24,7 @@ class Request:
         query = f"SELECT * FROM points"
         return await self.connector.fetch(query)
     async def getAdressById(self, pointId):
-        query = f"SELECT 1 FROM points WHERE id = '{pointId}' LIMIT 1"
+        query = f"SELECT address FROM points WHERE id = '{pointId}' LIMIT 1"
         return await self.connector.fetchval(query)
 
     async def showVolunteersPets(self, userId):
