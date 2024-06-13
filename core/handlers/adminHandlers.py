@@ -4,7 +4,7 @@ from aiogram.types import Message, CallbackQuery
 from aiogram.fsm.context import FSMContext
 from core.utils.stateForms import CreatingAdminSteps, CreatingVolunteerSteps
 from core.keyboards.inline import getInlineStartAdminKeyBoard, getInlineUserSettingsKeyboard
-
+from core.utils.dbConnection import Request
 
 router = Router()
 
@@ -83,11 +83,12 @@ async def stepAdminGetPassport(message: Message, state: FSMContext):
 
 
 @router.message(CreatingAdminSteps.GET_DISTRICT, F.text)
-async def stepAdminGetDistrict(message: Message, state: FSMContext):
+async def stepAdminGetDistrict(message: Message, state: FSMContext, request: Request):
     await state.update_data(admin_district=message.text)
     await state.set_state(CreatingAdminSteps.DONE)
     await message.answer('Анкета администратор создана')
     user_data = await state.get_data()
+    await request.add_data_admin(user_data)
     await message.answer(f'Анкета администратора:\n'
                          f'Имя: {user_data["admin_first_name"]}\n'
                          f'Фамилия: {user_data["admin_last_name"]}:\n'

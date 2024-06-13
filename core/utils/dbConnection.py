@@ -32,6 +32,11 @@ class Request:
                  f"'{data['is_sterilized']}', '{data['district']}', '{data['info']}', '{vol_id}') "
         await self.connector.execute(query)
 
+    async def add_data_admin(self, data):
+        query = f"INSERT INTO admins (id, first_name, last_name, phone, photo, passport, district) " \
+                f"VALUES('{data['admin_id']}', '{data['admin_first_name']}', '{data['admin_last_name']}', '{data['admin_phone']}', '{data['admin_photo']}', '{data['admin_passport']}', '{data['admin_district']}') "
+        await self.connector.execute(query)
+
     async def delete_data_pet(self, petId):
         query = f"DELETE FROM pets  WHERE id = '{petId}'"
         await self.connector.execute(query)
