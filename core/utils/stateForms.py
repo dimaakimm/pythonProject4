@@ -21,7 +21,6 @@ class CreatingAdminSteps(StatesGroup):
     GET_PHONE = State()
     GET_PHOTO = State()
     GET_PASSPORT = State()
-    GET_DISTRICT = State()
     DONE = State()
 
 
@@ -32,4 +31,6 @@ class CreatingVolunteerSteps(StatesGroup):
     GET_PHONE = State()
     GET_EMAIL = State()
     GET_PASSPORT = State()
+    GET_PHOTO_ID = State()
+    GET_BALANCE = State()
     DONE = State()

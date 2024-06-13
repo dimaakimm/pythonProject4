@@ -74,18 +74,10 @@ async def stepAdminGetPhoto(message: Message, state: FSMContext):
     await state.set_state(CreatingAdminSteps.GET_PASSPORT)
     await message.answer('Отправьте паспорт администратора')
 
-
 @router.message(CreatingAdminSteps.GET_PASSPORT, F.text)
-async def stepAdminGetPassport(message: Message, state: FSMContext):
-    await state.update_data(admin_passport=message.text)
-    await state.set_state(CreatingAdminSteps.GET_DISTRICT)
-    await message.answer('Отправьте район работы администратора')
-
-
-@router.message(CreatingAdminSteps.GET_DISTRICT, F.text)
 async def stepAdminGetDistrict(message: Message, state: FSMContext, request: Request):
-    await state.update_data(admin_district=message.text)
-    await state.set_state(CreatingAdminSteps.DONE)
+    await state.update_data(admin_passport=message.text)
+    await state.set_state(None)
     await message.answer('Анкета администратор создана')
     user_data = await state.get_data()
     await request.add_data_admin(user_data)
@@ -95,10 +87,7 @@ async def stepAdminGetDistrict(message: Message, state: FSMContext, request: Req
                          f'Фотография: {user_data["admin_photo"]}\n'
                          f'Id: {user_data["admin_id"]}\n'
                          f'Номер телефона: {user_data["admin_phone"]}\n'
-                         f'Паспорт: {user_data["admin_passport"]}\n'
-                         f'Район: {user_data["admin_district"]}')
-
-    # нужно сделать сохрание анкеты в бд
+                         f'Паспорт: {user_data["admin_passport"]}\n')
     await state.clear()
 
 
@@ -136,15 +125,28 @@ async def stepVolunteerGetPhone(message: Message, state: FSMContext):
 @router.message(CreatingVolunteerSteps.GET_EMAIL, F.text)
 async def stepVolunteerGetPhone(message: Message, state: FSMContext):
     await state.update_data(volunteer_email=message.text)
+    await state.set_state(CreatingVolunteerSteps.GET_PHOTO_ID)
+    await message.answer('Введите фотографию волонтера')
+
+@router.message(CreatingVolunteerSteps.GET_PHOTO_ID, F.photo)
+async def stepVolunteerGetPhone(message: Message, state: FSMContext):
+    await state.update_data(volunteer_photo_id=message.photo[-1].file_id)
+    await state.set_state(CreatingVolunteerSteps.GET_BALANCE)
+    await message.answer('Пришлите, сколько кг корма на руках у волонтера')
+
+@router.message(CreatingVolunteerSteps.GET_BALANCE, F.text)
+async def stepVolunteerGetPhone(message: Message, state: FSMContext):
+    await state.update_data(volunteer_balance = message.text)
     await state.set_state(CreatingVolunteerSteps.GET_PASSPORT)
-    await message.answer('Введите паспорт волонтера')
+    await message.answer('Пришлите пасспорт волонтера')
 
 @router.message(CreatingVolunteerSteps.GET_PASSPORT, F.text)
-async def stepVolunteerGetPhone(message: Message, state: FSMContext):
+async def stepVolunteerGetPhone(message: Message, state: FSMContext, request: Request):
     await state.update_data(volunteer_passport=message.text)
-    await state.set_state(CreatingVolunteerSteps.DONE)
+    await state.set_state(None)
     await message.answer('Анкета создана')
     user_data = await state.get_data()
+    await request.add_data_volunteer(user_data)
     await message.answer(f'Анкета Волонтера:\n'
                          f'id: {user_data["volunteer_id"]}\n'
                          f'Имя: {user_data["volunteer_first_name"]}\n'
@@ -152,6 +154,8 @@ async def stepVolunteerGetPhone(message: Message, state: FSMContext):
                          f'Телефон: {user_data["volunteer_phone"]}\n'
                          f'Email: {user_data["volunteer_email"]}\n'
                          f'Паспорт: {user_data["volunteer_passport"]}\n'
+                         f'photo id: {user_data["volunteer_photo_id"]}\n'
+                         f'Корма на руках: {user_data["volunteer_balance"]}\n'
                          )
     # нужно сделать сохрание анкеты в бд
     await state.clear()

@@ -34,6 +34,7 @@ async def addPetName(message: Message, state: FSMContext):
 @router.message(VolStepsFormAddPet.GET_PHOTO, F.photo)
 async def addPetName(message: Message, state: FSMContext):
     await state.update_data(photo_id=message.photo[-1].file_id)
+    print(message.photo[-1].file_id)
     await state.set_state(VolStepsFormAddPet.GET_STERILIZED)
     form_data = await state.get_data()
     await message.answer(f"Имя: {form_data['name']}\nИнформация: {form_data['info']}\nСтерилизовано ли животное?\n1 - yes\n2 - no", reply_markup=gеt_go_menu_keyboard())
