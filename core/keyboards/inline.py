@@ -4,7 +4,7 @@ from aiogram.utils.keyboard import InlineKeyboardBuilder
 def getGoAdmiMenyKeyBoard():
     keyboard_builder = InlineKeyboardBuilder()
     keyboard_builder.button(text='Назад', callback_data='goAdminMenu')
-    return keyboard_builder.as_markup(one_time_keyboard=True)
+    return keyboard_builder.as_markup(one_time_keyboard=True
 
 def getInlineStartAdminKeyBoard():
     keyboard_builder = InlineKeyboardBuilder()
