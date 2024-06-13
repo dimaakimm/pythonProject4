@@ -32,9 +32,20 @@ class Request:
                  f"'{data['is_sterilized']}', '{data['district']}', '{data['info']}', '{vol_id}') "
         await self.connector.execute(query)
 
-    async def delete_data_pet(self, pet_id):
-        query = f"DELETE FROM pets  WHERE id = '{pet_id}'"
+    async def delete_data_pet(self, petId):
+        query = f"DELETE FROM pets  WHERE id = '{petId}'"
         await self.connector.execute(query)
+
+    async def varifyAdmin(self, candidateId):
+        query = f"SELECT EXISTS(SELECT 1 FROM admins WHERE id='{candidateId}')"
+        result = await self.connector.fetchval(query)
+        return bool(result)
+
+    async def varifyVolunteer(self, candidateId):
+        query = f"SELECT EXISTS(SELECT 1 FROM volunteers WHERE id='{candidateId}')"
+        result = await self.connector.fetchval(query)
+        return bool(result)
+
 
 
 
