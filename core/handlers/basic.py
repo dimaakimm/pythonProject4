@@ -1,8 +1,8 @@
 from aiogram import F, Router
 from aiogram.types import Message
-from core.utils.dbConnection import Request
+from pythonProject4.core.utils.dbConnection import Request
 from aiogram.filters import Command
-from core.keyboards.inline import getInlineStartVolunteerKeyBoard, gеtStartKeyboard, getInlineStartAdminKeyBoard
+from pythonProject4.core.keyboards.inline import getInlineStartVolunteerKeyBoard, gеtStartKeyboard, getInlineStartAdminKeyBoard
 from aiogram.types import CallbackQuery
 router = Router()
 
@@ -13,8 +13,8 @@ async def startBotMessage(message: Message):
 
 
 @router.callback_query(F.data == 'loginAsAdmin')
-async def startBotMessage(call: CallbackQuery, request: Request):
-    if(await request.varifyAdmin(call.from_user.id)):
+async def loginAsAdmin(call: CallbackQuery, request: Request):
+    if(await request.varifyAdmin(call.from_user.id) == False):
         await call.message.answer(f'Привет, {call.message.from_user.first_name}!\nЭто админ бот, который поможет тебе '
                          f'обрабатывать заявки пользователей, желающих покормить животных!))',
                          reply_markup=getInlineStartAdminKeyBoard())
@@ -23,7 +23,7 @@ async def startBotMessage(call: CallbackQuery, request: Request):
                                   reply_markup=gеtStartKeyboard())
 
 @router.callback_query(F.data == 'loginAsVolunteer')
-async def cmdStart(call: CallbackQuery, request: Request):
+async def loginAsVolunteer(call: CallbackQuery, request: Request):
     if (await request.varifyVolunteer(call.from_user.id)):
         await call.message.answer(f'<b>Привет, {call.message.from_user.first_name}!\nТы вошел как волонтер!</b>)', reply_markup=getInlineStartVolunteerKeyBoard())
     else:

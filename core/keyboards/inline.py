@@ -9,6 +9,7 @@ def getInlineStartAdminKeyBoard():
     keyboard_builder.adjust(2)
     return keyboard_builder.as_markup(one_time_keyboard=True)
 
+
 def getInlineUserSettingsKeyboard():
     keyboard_builder = InlineKeyboardBuilder()
     keyboard_builder.button(text='Добавить нового администратора', callback_data='insertAdmin')
@@ -20,21 +21,22 @@ def getInlineUserSettingsKeyboard():
     return keyboard_builder.as_markup(one_time_keyboard=True)
 
 
-
 def gеt_accept_keyboard(fromId, toId, volume):
     keyboard_builder = InlineKeyboardBuilder()
     keyboard_builder.button(text='Согласиться', callback_data=f'accept{fromId}-{toId}-{volume}')
     keyboard_builder.button(text='Отказать', callback_data=f'decline{fromId}-{toId}')
-    keyboard_builder.button(text='Назад', callback_data='goMenu')
+    keyboard_builder.button(text='Назад', callback_data='goVolunteerMenu')
     keyboard_builder.adjust(2)
     return keyboard_builder.as_markup(one_time_keyboard=True)
+
 
 def gеt_pet_keyboard(pet_id):
     keyboard_builder = InlineKeyboardBuilder()
     keyboard_builder.button(text='Удалить питомца', callback_data=f'petDelete{pet_id}')
-    keyboard_builder.button(text='Назад', callback_data='goMenu')
+    keyboard_builder.button(text='Назад', callback_data='goVolunteerMenu')
     keyboard_builder.adjust(1)
     return keyboard_builder.as_markup(one_time_keyboard=True)
+
 
 def gеtStartKeyboard():
     keyboard_builder = InlineKeyboardBuilder()
@@ -43,12 +45,16 @@ def gеtStartKeyboard():
     keyboard_builder.adjust(1)
     return keyboard_builder.as_markup(one_time_keyboard=True)
 
+
+
 def gеt_volunteer_keyboard():
     keyboard_builder = InlineKeyboardBuilder()
     keyboard_builder.button(text='Передать корм', callback_data=f'volGiveFood')
-    keyboard_builder.button(text='Назад', callback_data='goMenu')
+    keyboard_builder.button(text='Назад', callback_data='goVolunteerMenu')
     keyboard_builder.adjust(1)
     return keyboard_builder.as_markup(one_time_keyboard=True)
+
+
 def getInlineStartVolunteerKeyBoard():
     keyboard_builder = InlineKeyboardBuilder()
     keyboard_builder.button(text='Показать профиль', callback_data='showProfile')
@@ -64,11 +70,25 @@ def getInlineKeyboardPet(allRequests):
     keyboard_builder = InlineKeyboardBuilder()
     for record in allRequests:
         keyboard_builder.button(text=record['name'], callback_data=f"showAPet{record['id']}")
-    keyboard_builder.button(text='Назад', callback_data='goMenu')
+    keyboard_builder.button(text='Назад', callback_data='goVolunteerMenu')
     keyboard_builder.adjust(1)
     return keyboard_builder.as_markup(one_time_keyboard=True)
+
+
 def gеt_go_menu_keyboard():
     keyboard_builder = InlineKeyboardBuilder()
-    keyboard_builder.button(text='Назад', callback_data='goMenu')
+    keyboard_builder.button(text='Назад', callback_data='goVolunteerMenu')
     keyboard_builder.adjust(1)
+    return keyboard_builder.as_markup(one_time_keyboard=True)
+
+def petCreateSuccesfulKeyBoard():
+    keyboard_builder = InlineKeyboardBuilder()
+    keyboard_builder.button(text='Назад', callback_data='goVolunteerMenu')
+    keyboard_builder.button(text='Верно', callback_data='createPetSuccesful')
+    keyboard_builder.adjust(1)
+    return keyboard_builder.as_markup(one_time_keyboard=True)
+
+def getGoAdminMenyKeyBoard():
+    keyboard_builder = InlineKeyboardBuilder()
+    keyboard_builder.button(text='Назад', callback_data='goAdminMenu')
     return keyboard_builder.as_markup(one_time_keyboard=True)
