@@ -42,3 +42,5 @@ class DeletingVolunteerSteps(StatesGroup):
 
 class DeletingAdminSteps(StatesGroup):
    GET_ID = State()
+
+

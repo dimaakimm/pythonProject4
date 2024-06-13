@@ -16,6 +16,17 @@ class Request:
         query = f"SELECT * FROM pets WHERE id='{petId}'"
         return await self.connector.fetch(query)
 
+    async def showVolunteersToOrder(self):
+        query = f"SELECT * FROM volunteers WHERE state='wait'"
+        return await self.connector.fetch(query)
+
+    async def showPointsToOrder(self):
+        query = f"SELECT * FROM points"
+        return await self.connector.fetch(query)
+    async def getAdressById(self, pointId):
+        query = f"SELECT 1 FROM points WHERE id = '{pointId}' LIMIT 1"
+        return await self.connector.fetchval(query)
+
     async def showVolunteersPets(self, userId):
         query = f"SELECT * FROM pets WHERE vol_id='{userId}'"
         return await self.connector.fetch(query)

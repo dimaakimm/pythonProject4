@@ -1,8 +1,24 @@
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
+
+def getInlineKeyboardVolunteers(allRequests):
+    keyboard_builder = InlineKeyboardBuilder()
+    for record in allRequests:
+        keyboard_builder.button(text=record['forename'] + " - " + record['id'], callback_data=f"orderChoose{record['id']}")
+    keyboard_builder.button(text='Назад', callback_data='goVolunteerMenu')
+    keyboard_builder.adjust(2)
+    return keyboard_builder.as_markup(one_time_keyboard=True)
+
+def getInlineKeyboardPoints(allRequests, id):
+    keyboard_builder = InlineKeyboardBuilder()
+    for record in allRequests:
+        keyboard_builder.button(text=f"{record['address']} - {record['id']}", callback_data=f"orderCreate{id}-{record['id']}")
+    keyboard_builder.button(text='Назад', callback_data='goVolunteerMenu')
+    keyboard_builder.adjust(2)
+    return keyboard_builder.as_markup(one_time_keyboard=True)
+
 def getInlineStartAdminKeyBoard():
     keyboard_builder = InlineKeyboardBuilder()
-    # keyboard_builder.button(text='Получить данные заявок на кор', callback_data='getAllRequest')
     keyboard_builder.button(text='Настройки пользователей', callback_data='getUsersSettings')
     keyboard_builder.button(text='Настройки пункта', callback_data='getPointSettings')
     keyboard_builder.button(text='Работа с волонтерами', callback_data='getVolunteerWork')
