@@ -77,6 +77,7 @@ def getInlineStartVolunteerKeyBoard():
     keyboard_builder.button(text='Добавить питомца', callback_data='addPet')
     keyboard_builder.button(text='Показать питомцев', callback_data='showPets')
     keyboard_builder.button(text='Найти волонтера', callback_data='findProfile')
+    keyboard_builder.button(text='Забрать заказ', callback_data='takeFood')
 
     keyboard_builder.adjust(1)
     return keyboard_builder.as_markup(one_time_keyboard=True)

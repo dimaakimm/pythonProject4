@@ -14,7 +14,7 @@ async def startBotMessage(message: Message):
 
 @router.callback_query(F.data == 'loginAsAdmin')
 async def loginAsAdmin(call: CallbackQuery, request: Request):
-    if(await request.varifyAdmin(call.from_user.id) == False):
+    if await request.varifyAdmin(call.from_user.id):
         await call.message.answer(f'Привет, {call.from_user.first_name}!\nЭто админ бот, который поможет тебе '
                          f'обрабатывать заявки пользователей, желающих покормить животных!))',
                          reply_markup=getInlineStartAdminKeyBoard())

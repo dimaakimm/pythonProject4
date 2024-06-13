@@ -9,6 +9,7 @@ class VolStepsFormAddPet(StatesGroup):
     GET_DISTRICT = State()
     GET_CONFIRM = State()
 
+
 class VolFriends(StatesGroup):
     GET_PROFILE = State()
     GET_PHOTO = State()
@@ -37,10 +38,20 @@ class CreatingVolunteerSteps(StatesGroup):
     GET_BALANCE = State()
     DONE = State()
 
+
 class DeletingVolunteerSteps(StatesGroup):
-   GET_ID = State()
+    GET_ID = State()
+
 
 class DeletingAdminSteps(StatesGroup):
-   GET_ID = State()
+    GET_ID = State()
+
+
+class TakeFoodSteps(StatesGroup):
+    GET_RAW_CAT_FOOD = State()
+    GET_DRY_CAT_FOOD = State()
+    GET_RAW_DOG_FOOD = State()
+    GET_DRY_DOG_FOOD = State()
+    GET_PHOTO = State()
 
 
