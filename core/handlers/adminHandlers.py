@@ -77,7 +77,6 @@ async def stepAdminGetPhoto(message: Message, state: FSMContext):
 @router.message(CreatingAdminSteps.GET_PASSPORT, F.text)
 async def stepAdminGetDistrict(message: Message, state: FSMContext, request: Request):
     await state.update_data(admin_passport=message.text)
-    await state.set_state(None)
     await message.answer('Анкета администратор создана')
     user_data = await state.get_data()
     await request.add_data_admin(user_data)
@@ -143,7 +142,6 @@ async def stepVolunteerGetPhone(message: Message, state: FSMContext):
 @router.message(CreatingVolunteerSteps.GET_PASSPORT, F.text)
 async def stepVolunteerGetPhone(message: Message, state: FSMContext, request: Request):
     await state.update_data(volunteer_passport=message.text)
-    await state.set_state(None)
     await message.answer('Анкета создана')
     user_data = await state.get_data()
     await request.add_data_volunteer(user_data)
@@ -157,5 +155,4 @@ async def stepVolunteerGetPhone(message: Message, state: FSMContext, request: Re
                          f'photo id: {user_data["volunteer_photo_id"]}\n'
                          f'Корма на руках: {user_data["volunteer_balance"]}\n'
                          )
-    # нужно сделать сохрание анкеты в бд
     await state.clear()

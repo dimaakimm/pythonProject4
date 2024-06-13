@@ -66,6 +66,7 @@ async def addPetName(message: Message, state: FSMContext, request: Request):
     form_data = await state.get_data()
     await request.add_data_pet(form_data, message.from_user.id)
     await message.answer(text = f"Вы успешно добавили питомца!", reply_markup=gеt_go_menu_keyboard())
+    await state.clear()
 
 
 @router.callback_query(F.data == 'showProfile')
