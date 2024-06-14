@@ -48,6 +48,7 @@ class DeletingAdminSteps(StatesGroup):
 
 
 class TakeFoodSteps(StatesGroup):
+    GET_POINT_ADDRESS = State()
     GET_RAW_CAT_FOOD = State()
     GET_DRY_CAT_FOOD = State()
     GET_RAW_DOG_FOOD = State()

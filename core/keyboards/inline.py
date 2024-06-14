@@ -119,7 +119,7 @@ def getGoAdminMenyKeyBoard():
     return keyboard_builder.as_markup(one_time_keyboard=True)
 
 
-def getInlineKeyboardPoints(allRequests):
+def getInlineKeyboardPointsList(allRequests):
     keyboard_builder = InlineKeyboardBuilder()
     for record in allRequests:
         keyboard_builder.button(text=record['address'], callback_data=f"showPointInfo{record['id']}")

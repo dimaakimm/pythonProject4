@@ -21,7 +21,7 @@ class Request:
         query = f"SELECT * FROM volunteers WHERE state='wait'"
         return await self.connector.fetch(query)
 
-    async def showPointsToOrder(self):
+    async def showPointsToOrder(self, id):
         query = f"SELECT * FROM points"
         return await self.connector.fetch(query)
     async def getAdressById(self, pointId):
@@ -121,12 +121,23 @@ class Request:
         return await self.connector.fetch(query)
 
 
-    async def updatePointFood(self, data):
-        query = f"UPDATE points SET {data['foodType']} = {data['foodType']} + {data['foodVolume']} \
-        WHERE id = '{data['pointId']}'"
+    async def updatePointFood(self, data, updateType):
+        if updateType == "increase":
+            query = f"UPDATE points SET {data['foodType']} = {data['foodType']} + {data['foodVolume']} \
+            WHERE id = '{data['pointId']}'"
+        elif updateType == "decrease":
+            query = f"UPDATE points SET {data['foodType']} = {data['foodType']} - {data['foodVolume']} \
+            WHERE id = '{data['pointId']}'"
         await self.connector.execute(query)
 
     async def addNewOrder(self, idVolunteer, data):
         query = f"INSERT INTO orders (volunteer_id, raw_cat_food, raw_dog_food, dry_dog_food, dry_cat_food, photo)" \
                 f"VALUES('{idVolunteer}', '{data['raw_cat_food']}', '{data['raw_dog_food']}', '{data['dry_dog_food']}', '{data['dry_cat_food']}', '{data['photo_id']}')"
+        await self.connector.execute(query)
+
+
+    async def updateVolunteerGetOrderStatus(self, idVolunteer, newStatus):
+        query = f"UPDATE volunteers SET state = '{newStatus}' WHERE id = '{idVolunteer}'"
+        await self.connector.execute(query)
+        query = f"UPDATE volunteers SET point_id = DEFAULT WHERE id = '{idVolunteer}'"
         await self.connector.execute(query)

@@ -9,7 +9,7 @@ from core.utils.stateForms import CreatingAdminSteps, CreatingVolunteerSteps, De
     DeletingAdminSteps, AddFoodToPointSteps
 from core.keyboards.inline import getInlineStartAdminKeyBoard, getInlineUserSettingsKeyboard, getGoAdminMenyKeyBoard, \
     getInlineKeyboardPoints, getInlineKeyboardPointInfo, getInlineKeyboardPointFoodType, getGoAdmiMenyKeyBoard, \
-    getInlineKeyboardPointAddAnotherFood
+    getInlineKeyboardPointAddAnotherFood, getInlineKeyboardPointsList
 
 router = Router()
 
@@ -62,7 +62,7 @@ async def goAdminMenu(call: CallbackQuery, state: FSMContext):
 
 @router.callback_query(F.data == "getPointSettings")
 async def getPointSettings(call: CallbackQuery, request: Request):
-    await call.message.answer(text="Выберите нужную точку", reply_markup=getInlineKeyboardPoints(
+    await call.message.answer(text="Выберите нужную точку", reply_markup=getInlineKeyboardPointsList(
         await request.showPinnedPoints(call.from_user.id)
     ))
 
@@ -101,7 +101,7 @@ async def stepAddFoodToPointFinish(message: Message, state: FSMContext, request:
     await message.answer(f"Данные о пункте обновлены.\n",
                          reply_markup=getInlineKeyboardPointAddAnotherFood())
     user_data = await state.get_data()
-    await request.updatePointFood(user_data)
+    await request.updatePointFood(user_data, "increase")
     await state.clear()
 
 
