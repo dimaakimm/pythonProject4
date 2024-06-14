@@ -80,7 +80,9 @@ async def getDryDogFood(message: Message, state: FSMContext):
 @router.message(TakeFoodSteps.GET_PHOTO, F.photo)
 async def getPhotoOrder(message: Message, state: FSMContext, request: Request):
     await state.update_data(photo_id=message.photo[-1].file_id)
+    await state.update_data(volunteer_id=message.from_user.id)
     order_data = await state.get_data()
+
     await request.addNewOrder(message.from_user.id, order_data)
     await message.answer(text="Отлично! Удачной доставки!", reply_markup=gеt_go_menu_keyboard())
 
@@ -92,6 +94,18 @@ async def getPhotoOrder(message: Message, state: FSMContext, request: Request):
                                        pointId=order_data['pointId']), "decrease")
     await request.updatePointFood(dict(foodType='wet_dog_food', foodVolume=order_data['raw_dog_food'],
                                        pointId=order_data['pointId']), "decrease")
+
+    await request.upgradeVolunteerFoodBalance(dict(foodType='dry_cat_food', foodVolume=order_data['dry_cat_food'],
+                                       volunteer_id=order_data['volunteer_id']), "increase")
+    await request.upgradeVolunteerFoodBalance(dict(foodType='raw_cat_food', foodVolume=order_data['raw_cat_food'],
+                                       volunteer_id=order_data['volunteer_id']), "increase")
+    await request.upgradeVolunteerFoodBalance(dict(foodType='dry_dog_food', foodVolume=order_data['dry_dog_food'],
+                                       volunteer_id=order_data['volunteer_id']), "increase")
+    await request.upgradeVolunteerFoodBalance(dict(foodType='raw_dog_food', foodVolume=order_data['raw_dog_food'],
+                                       volunteer_id=order_data['volunteer_id']), "increase")
+
+
+
     await request.updateVolunteerGetOrderStatus(message.from_user.id, "wait")
     await state.clear()
 

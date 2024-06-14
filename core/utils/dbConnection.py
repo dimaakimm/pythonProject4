@@ -76,11 +76,11 @@ class Request:
         result = await self.connector.fetchval(query)
         return bool(result)
 
+
     async def getAllPoints(self):
         query = "SELECT address FROM points"
         return await self.connector.fetch(query)
 
-        # admin
 
     async def insertNewAdmin(self, data):
         pointName = "%" + data["admin_point"] + "%"
@@ -115,7 +115,7 @@ class Request:
 
 
     async def showPointInfo(self, pointId):
-        query =  f"SELECT f.* \
+        query = f"SELECT f.* \
                  FROM points f \
                  WHERE id='{pointId}'"
         return await self.connector.fetch(query)
@@ -128,6 +128,15 @@ class Request:
         elif updateType == "decrease":
             query = f"UPDATE points SET {data['foodType']} = {data['foodType']} - {data['foodVolume']} \
             WHERE id = '{data['pointId']}'"
+        await self.connector.execute(query)
+
+    async def upgradeVolunteerFoodBalance(self, data, updateType):
+        if updateType == "increase":
+            query = f"UPDATE volunteers_food SET {data['foodType']} = {data['foodType']} + {data['foodVolume']} \
+            WHERE volunteer_id = {data['volunteer_id']}"
+        elif updateType == "decrease":
+            query = f"UPDATE volunteers_food SET {data['foodType']} = {data['foodType']} - {data['foodVolume']} \
+            WHERE volunteer_id = {data['volunteer_id']}"
         await self.connector.execute(query)
 
     async def addNewOrder(self, idVolunteer, data):
