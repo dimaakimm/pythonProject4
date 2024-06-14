@@ -26,4 +26,5 @@ async def getListOfVolunteers(call: CallbackQuery, request: Request, bot: Bot):
     pointId = call.data[index+1:]
     adress = await request.getAdressById(pointId)
     await bot.send_message(chat_id=volunteerId, text=f"Вам пришел запрос от {call.from_user.id} чтобы вы доставили корм на адрес: {adress}!")
+    await request.updateVolunteerGetOrderStatus(volunteerId, "busy", pointId)
     await call.message.answer("Запрос отправлен!", reply_markup=getGoAdminMenyKeyBoard())

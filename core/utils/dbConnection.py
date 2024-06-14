@@ -21,7 +21,7 @@ class Request:
         query = f"SELECT * FROM volunteers WHERE state='wait'"
         return await self.connector.fetch(query)
 
-    async def showPointsToOrder(self, id):
+    async def showPointsToOrder(self):
         query = f"SELECT * FROM points"
         return await self.connector.fetch(query)
     async def getAdressById(self, pointId):
@@ -136,8 +136,11 @@ class Request:
         await self.connector.execute(query)
 
 
-    async def updateVolunteerGetOrderStatus(self, idVolunteer, newStatus):
+    async def updateVolunteerGetOrderStatus(self, idVolunteer, newStatus, pointId=None):
         query = f"UPDATE volunteers SET state = '{newStatus}' WHERE id = '{idVolunteer}'"
         await self.connector.execute(query)
-        query = f"UPDATE volunteers SET point_id = DEFAULT WHERE id = '{idVolunteer}'"
+        if (pointId != None):
+            query = f"UPDATE volunteers SET point_id = '{pointId}' WHERE id = '{idVolunteer}'"
+        else:
+            query = f"UPDATE volunteers SET point_id = DEFAULT WHERE id = '{idVolunteer}'"
         await self.connector.execute(query)
