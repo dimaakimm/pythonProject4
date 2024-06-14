@@ -11,6 +11,7 @@ router = Router()
 async def stepAdminId(call: CallbackQuery, state: FSMContext):
     await state.set_state(CreatingAdminSteps.GET_ID)
     await call.message.answer('Введите id нового администратора')
+    await call.answer()
 
 
 @router.message(CreatingAdminSteps.GET_ID, F.text)

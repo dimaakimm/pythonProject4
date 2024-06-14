@@ -42,3 +42,10 @@ class DeletingVolunteerSteps(StatesGroup):
 
 class DeletingAdminSteps(StatesGroup):
    GET_ID = State()
+
+
+class AddFoodToPointSteps(StatesGroup):
+    START = State()
+    GET_FOOD_TYPE = State()
+    GET_VOLUME = State()
+    DONE = State()

@@ -94,7 +94,24 @@ class Request:
                 f"VALUES('{data['volunteer_id']}', '{data['volunteer_first_name']}', '{data['volunteer_last_name']}', '{data['volunteer_email']}','{data['volunteer_phone']}', '{data['volunteer_photo_id']}', '{data['volunteer_passport']}', '{data['volunteer_balance']}') "
         await self.connector.execute(query)
 
+    async def showPinnedPoints(self, adminId):
+        query = f"SELECT f.* \
+                FROM points f \
+                JOIN admins_points s on f.id = s.id_point \
+                WHERE s.id_admin='{adminId}'"
+        return await self.connector.fetch(query)
 
 
+    async def showPointInfo(self, pointId):
+        query =  f"SELECT f.* \
+                 FROM points f \
+                 WHERE id='{pointId}'"
+        return await self.connector.fetch(query)
+
+
+    async def updatePointFood(self, data):
+        query = f"UPDATE points SET {data['foodType']} = {data['foodType']} + {data['foodVolume']} \
+        WHERE id = '{data['pointId']}'"
+        await self.connector.execute(query)
 
 

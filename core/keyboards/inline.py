@@ -1,5 +1,7 @@
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
+from core.utils.callbackFactories import AddFoodToPoint
+
 
 def getGoAdmiMenyKeyBoard():
     keyboard_builder = InlineKeyboardBuilder()
@@ -99,4 +101,40 @@ def petCreateSuccesfulKeyBoard():
 def getGoAdminMenyKeyBoard():
     keyboard_builder = InlineKeyboardBuilder()
     keyboard_builder.button(text='Назад', callback_data='goAdminMenu')
+    return keyboard_builder.as_markup(one_time_keyboard=True)
+
+
+def getInlineKeyboardPoints(allRequests):
+    keyboard_builder = InlineKeyboardBuilder()
+    for record in allRequests:
+        keyboard_builder.button(text=record['address'], callback_data=f"showPointInfo{record['id']}")
+    keyboard_builder.button(text='Назад', callback_data='goAdminMenu')
+    keyboard_builder.adjust(1)
+    return keyboard_builder.as_markup(one_time_keyboard=True)
+
+
+def getInlineKeyboardPointInfo():
+    keyboard_builder = InlineKeyboardBuilder()
+    keyboard_builder.button(text='Добавить корм', callback_data="addFoodToPoint")
+    keyboard_builder.button(text='Назад', callback_data='goAdminMenu')
+    keyboard_builder.adjust(1)
+    return keyboard_builder.as_markup(one_time_keyboard=True)
+
+
+def getInlineKeyboardPointFoodType():
+    keyboard_builder = InlineKeyboardBuilder()
+    keyboard_builder.button(text='Cухой кошачий', callback_data=AddFoodToPoint(foodType="dry_cat_food"))
+    keyboard_builder.button(text='Влажный кошачий', callback_data=AddFoodToPoint(foodType="wet_cat_food"))
+    keyboard_builder.button(text='Сухой собачий', callback_data=AddFoodToPoint(foodType="dry_dog_food"))
+    keyboard_builder.button(text='Влажный собачий', callback_data=AddFoodToPoint(foodType="wet_dog_food"))
+    keyboard_builder.button(text='Назад', callback_data='goAdminMenu')
+    keyboard_builder.adjust(1)
+    return keyboard_builder.as_markup(one_time_keyboard=True)
+
+
+def getInlineKeyboardPointAddAnotherFood():
+    keyboard_builder = InlineKeyboardBuilder()
+    keyboard_builder.button(text='Добавить ещё корм', callback_data="addFoodToPoint")
+    keyboard_builder.button(text='В меню', callback_data='goAdminMenu')
+    keyboard_builder.adjust(1)
     return keyboard_builder.as_markup(one_time_keyboard=True)

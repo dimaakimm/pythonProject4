@@ -12,6 +12,7 @@ router = Router()
 async def addPet(call: CallbackQuery, state: FSMContext):
     await state.set_state(VolStepsFormAddPet.GET_NAME)
     await call.message.answer('Введите имя животного', reply_markup=gеt_go_menu_keyboard())
+    await call.answer()
 
 
 @router.message(VolStepsFormAddPet.GET_NAME, F.text)
@@ -56,9 +57,10 @@ async def addPetName(message: Message, state: FSMContext):
 
 
 @router.callback_query(VolStepsFormAddPet.GET_CONFIRM, F.data == "createPetSuccesful")
-async def addPetName(message: Message, state: FSMContext, request: Request):
+async def addPetName(call: CallbackQuery, message: Message, state: FSMContext, request: Request):
     await state.set_state(None)
     form_data = await state.get_data()
     await request.add_data_pet(form_data, message.from_user.id)
     await message.answer(text=f"Вы успешно добавили питомца!", reply_markup=gеt_go_menu_keyboard())
+    await call.answer()
 

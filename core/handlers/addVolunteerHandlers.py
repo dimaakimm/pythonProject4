@@ -11,6 +11,7 @@ router = Router()
 async def stepVolunteerId(call: CallbackQuery, state: FSMContext):
     await state.set_state(CreatingVolunteerSteps.GET_ID)
     await call.message.answer('Введите id волонтера', reply_markup=getGoAdminMenyKeyBoard())
+    await call.answer()
 
 
 @router.message(CreatingVolunteerSteps.GET_ID, F.text)
