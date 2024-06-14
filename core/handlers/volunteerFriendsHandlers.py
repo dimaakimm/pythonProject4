@@ -14,6 +14,7 @@ async def findProfile(call: CallbackQuery, state: FSMContext, request: Request):
     await state.set_state(VolFriends.GET_PROFILE)
     await call.message.answer(text="Введить id пользователя!\n(можете спросить у него)",
                               reply_markup=gеt_go_menu_keyboard())
+    await call.answer()
 
 @router.message(F.text, VolFriends.GET_PROFILE)
 async def getProfile(message: Message, state: FSMContext, request: Request):
@@ -35,6 +36,7 @@ async def giveFood(message: Message, request: Request, state: FSMContext, bot: B
 async def volGiveFood(call: CallbackQuery, request: Request, state: FSMContext):
     await state.set_state(VolFriends.GIVE_FOOD)
     await call.message.answer("Сколько кг корма хотите передаеть ему/ей? (целые значения)", reply_markup=gеt_go_menu_keyboard())
+    await call.answer()
 
 @router.callback_query(F.data.startswith("accept"))
 async def acceptFood(call: CallbackQuery, request: Request, bot: Bot):
@@ -49,6 +51,7 @@ async def acceptFood(call: CallbackQuery, request: Request, bot: Bot):
     await request.giveFoodFromVtoV(from_id, to_id, volume)
     await call.message.answer(text="Успешно!", reply_markup=gеt_go_menu_keyboard())
     await bot.send_message(chat_id=from_id, text=f"Волонтер {to_id} принял ваш запрос!")
+    await call.answer()
 
 @router.callback_query(F.data.startswith("decline"))
 async def declineFood(call: CallbackQuery, request: Request, bot: Bot):
@@ -57,6 +60,7 @@ async def declineFood(call: CallbackQuery, request: Request, bot: Bot):
     to_id = call.data[symbIndex+1:]
     await call.message.answer(text="Успешно!", reply_markup=gеt_go_menu_keyboard())
     await bot.send_message(chat_id=from_id, text=f"Волонтер {to_id} отклонил ваш запрос!")
+    await call.answer()
 
 def showVolunteerProfileMessage(allRequests):
     message = "ПРОФИЛЬ ВОЛОНТЕРА:\n"

@@ -21,6 +21,7 @@ async def loginAsAdmin(call: CallbackQuery, request: Request):
     else:
         await call.message.answer(f'Тебя нет в списке админов(',
                                   reply_markup=gеtStartKeyboard())
+    await call.answer()
 
 @router.callback_query(F.data == 'loginAsVolunteer')
 async def loginAsVolunteer(call: CallbackQuery, request: Request):
@@ -29,5 +30,6 @@ async def loginAsVolunteer(call: CallbackQuery, request: Request):
     else:
         await call.message.answer(f'Тебя нет в списке волонтеров(',
                                   reply_markup=gеtStartKeyboard())
+    await call.answer()
 
 

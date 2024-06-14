@@ -1,6 +1,7 @@
 from aiogram import Bot, F, Router
 from core.utils.dbConnection import Request
-from core.keyboards.inline import getInlineStartVolunteerKeyBoard, gеt_go_menu_keyboard, getInlineKeyboardPet, gеt_pet_keyboard, gеt_volunteer_keyboard, gеt_accept_keyboard, gеtStartKeyboard, getInlineStartAdminKeyBoard
+from core.keyboards.inline import getInlineStartVolunteerKeyBoard, gеt_go_menu_keyboard, getInlineKeyboardPet, \
+    gеt_pet_keyboard, gеt_volunteer_keyboard, gеt_accept_keyboard, gеtStartKeyboard, getInlineStartAdminKeyBoard
 from aiogram.types import CallbackQuery, Message
 from aiogram.fsm.context import FSMContext
 from core.utils.stateForms import VolStepsFormAddPet, VolFriends
@@ -14,6 +15,7 @@ async def goVolunteerMenu(call: CallbackQuery, state: FSMContext):
     await state.set_state(None)
     await call.message.answer(f'<b>Ты в главном меню</b>',
                               reply_markup=getInlineStartVolunteerKeyBoard())
+    await call.answer()
 
 
 @router.callback_query(F.data == 'showProfile')
@@ -21,11 +23,15 @@ async def showProfile(call: CallbackQuery, request: Request):
     messageToSend = showVolunteerProfileMessage(await request.showProfile(call.from_user.id))[0]
     photo_id = showVolunteerProfileMessage(await request.showProfile(call.from_user.id))[1]
     await call.message.answer_photo(caption=messageToSend, photo=photo_id, reply_markup=gеt_go_menu_keyboard())
+    await call.answer()
 
 
 @router.callback_query(F.data == 'showPets')
 async def showPets(call: CallbackQuery, request: Request):
-    await call.message.answer(text='Вот ваши животные!', reply_markup=getInlineKeyboardPet(await request.showVolunteersPets(call.from_user.id)))
+    await call.message.answer(text='Вот ваши животные!', reply_markup=getInlineKeyboardPet(
+        await request.showVolunteersPets(call.from_user.id)))
+    await call.answer()
+
 
 @router.callback_query(F.data.startswith('showAPet'))
 async def showAPet(call: CallbackQuery, request: Request):
@@ -33,7 +39,8 @@ async def showAPet(call: CallbackQuery, request: Request):
     messageToSend = takeVoluneersPet(await request.showPetProfile(pet_id))[0]
     photo_id = takeVoluneersPet(await request.showPetProfile(pet_id))[1]
     await call.message.answer_photo(photo=photo_id,
-        caption=messageToSend, reply_markup=gеt_pet_keyboard(pet_id))
+                                    caption=messageToSend, reply_markup=gеt_pet_keyboard(pet_id))
+    await call.answer()
 
 
 @router.callback_query(F.data.startswith('petDelete'))
@@ -41,6 +48,7 @@ async def petDelete(call: CallbackQuery, request: Request, state: FSMContext):
     pet_id = call.data[9:]
     await request.delete_data_pet(pet_id)
     await call.message.answer(text="Удален!", reply_markup=gеt_go_menu_keyboard())
+    await call.answer()
 
 
 def showVolunteerProfileMessage(allRequests):
@@ -65,7 +73,6 @@ def showProfileMessage(allRequests):
         photo_id = record[photo_id]
         message += "-------------------------------------------\n"
     return [message, photo_id]
-
 
 
 def takeVoluneersPets(allRequests):

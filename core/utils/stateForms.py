@@ -55,3 +55,8 @@ class TakeFoodSteps(StatesGroup):
     GET_PHOTO = State()
 
 
+class AddFoodToPointSteps(StatesGroup):
+    START = State()
+    GET_FOOD_TYPE = State()
+    GET_VOLUME = State()
+    DONE = State()

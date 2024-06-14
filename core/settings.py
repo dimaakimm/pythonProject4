@@ -9,8 +9,18 @@ class Bots:
 
 
 @dataclass
+class Database:
+    host: str
+    user: str
+    password: str
+    database: str
+    port: int
+
+
+@dataclass
 class Settings:
     bots: Bots
+    db: Database
 
 
 def getSettings(path: str):
@@ -20,6 +30,13 @@ def getSettings(path: str):
         bots=Bots(
             bot_token=env.str("TOKEN"),
             admin_id=env.int("ADMIN_ID")
+        ),
+        db=Database(
+            host=env.str("PGHOST"),
+            user=env.str("PGUSER"),
+            password=env.str("PGPASSWORD"),
+            database=env.str("PGDATABASE"),
+            port=env.int("PGPORT")
         )
     )
 
