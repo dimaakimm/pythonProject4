@@ -106,6 +106,12 @@ def gеt_go_menu_keyboard():
     keyboard_builder.adjust(1)
     return keyboard_builder.as_markup(one_time_keyboard=True)
 
+def gеtGoSettingsAdminKeykeyboard():
+    keyboard_builder = InlineKeyboardBuilder()
+    keyboard_builder.button(text='Назад', callback_data='goAdminSettings')
+    keyboard_builder.adjust(1)
+    return keyboard_builder.as_markup(one_time_keyboard=True)
+
 def petCreateSuccesfulKeyBoard():
     keyboard_builder = InlineKeyboardBuilder()
     keyboard_builder.button(text='Назад', callback_data='goVolunteerMenu')
@@ -153,3 +159,4 @@ def getInlineKeyboardPointAddAnotherFood():
     keyboard_builder.button(text='В меню', callback_data='goAdminMenu')
     keyboard_builder.adjust(1)
     return keyboard_builder.as_markup(one_time_keyboard=True)
+

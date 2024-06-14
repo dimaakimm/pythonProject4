@@ -5,11 +5,11 @@ from core.utils.callbackFactories import AddFoodToPoint
 from core.utils.dbConnection import Request
 from aiogram.types import Message, CallbackQuery
 from aiogram.fsm.context import FSMContext
-from core.utils.stateForms import CreatingAdminSteps, CreatingVolunteerSteps, DeletingVolunteerSteps, \
-    DeletingAdminSteps, AddFoodToPointSteps
-from core.keyboards.inline import getInlineStartAdminKeyBoard, getInlineUserSettingsKeyboard, getGoAdminMenyKeyBoard, \
-    getInlineKeyboardPoints, getInlineKeyboardPointInfo, getInlineKeyboardPointFoodType, getGoAdmiMenyKeyBoard, \
-    getInlineKeyboardPointAddAnotherFood, getInlineKeyboardPointsList
+from core.utils.stateForms import (CreatingAdminSteps, CreatingVolunteerSteps, DeletingVolunteerSteps,
+    DeletingAdminSteps, AddFoodToPointSteps)
+from core.keyboards.inline import (getInlineStartAdminKeyBoard, getInlineUserSettingsKeyboard, getGoAdminMenyKeyBoard,
+    getInlineKeyboardPoints, getInlineKeyboardPointInfo, getInlineKeyboardPointFoodType, getGoAdmiMenyKeyBoard,
+    getInlineKeyboardPointAddAnotherFood, getInlineKeyboardPointsList)
 
 router = Router()
 
@@ -58,6 +58,12 @@ async def goAdminMenu(call: CallbackQuery, state: FSMContext):
     await call.message.answer(f'Привет, {call.from_user.first_name}!\nЭто админ бот, который поможет тебе '
                               f'обрабатывать заявки пользователей, желающих покормить животных!))',
                               reply_markup=getInlineStartAdminKeyBoard())
+
+@router.callback_query(F.data == "goAdminSettings")
+async def goAdminMenu(call: CallbackQuery, state: FSMContext):
+    await state.clear()
+    await call.message.answer(f'Настройки пользователя',
+                              reply_markup=getInlineUserSettingsKeyboard())
 
 
 @router.callback_query(F.data == "getPointSettings")
