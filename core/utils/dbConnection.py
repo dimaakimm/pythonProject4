@@ -58,8 +58,10 @@ class Request:
 
         await self.connector.execute(query)
 
-        querryBalance = (f'INSERT INTO volunteers_food (volunteer_id, raw_cat_food, raw_dog_food, dry_dog_food, dry_cat_food)'\
-                         f'VALUES({data["volunteer_id"]}, 0, 0, 0, 0)')
+    async def add_data_volunteers_food(self, data):
+        querryBalance = (
+            f'INSERT INTO volunteers_food (volunteer_id, raw_cat_food, raw_dog_food, dry_dog_food, dry_cat_food)' \
+            f"VALUES({data['volunteer_id']}, 0, 0, 0, 0)")
 
         await self.connector.execute(querryBalance)
 

@@ -63,6 +63,7 @@ async def stepVolunteerGetPhone(message: Message, state: FSMContext, request: Re
     await message.answer('Анкета создана')
     user_data = await state.get_data()
     await request.add_data_volunteer(user_data)
+    await request.add_data_volunteers_food(user_data)
     await message.answer(f'Анкета Волонтера:\n'
                          f'id: {user_data["volunteer_id"]}\n'
                          f'Имя: {user_data["volunteer_first_name"]}\n'
