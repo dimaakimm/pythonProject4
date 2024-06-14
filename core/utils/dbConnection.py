@@ -12,6 +12,7 @@ class Request:
     async def showProfile(self, userId):
         query = f"SELECT * FROM volunteers WHERE id='{userId}'"
         return await self.connector.fetch(query)
+
     async def showVolunteerBalance(self, userId):
         query = f"SELECT * FROM volunteers_food WHERE volunteer_id='{userId}'"
         return await self.connector.fetch(query)
@@ -27,6 +28,7 @@ class Request:
     async def showPointsToOrder(self):
         query = f"SELECT * FROM points"
         return await self.connector.fetch(query)
+
     async def getAdressById(self, pointId):
         query = f"SELECT address FROM points WHERE id = '{pointId}' LIMIT 1"
         return await self.connector.fetchval(query)
@@ -53,8 +55,9 @@ class Request:
         await self.connector.execute(query)
 
     async def add_data_volunteer(self, data):
-        query = (f"INSERT INTO volunteers (id, forename, surname, email, phone_number, photo_id, passport, food_balance)" \
-                f"VALUES('{data['volunteer_id']}', '{data['volunteer_first_name']}', '{data['volunteer_last_name']}', '{data['volunteer_email']}','{data['volunteer_phone']}', '{data['volunteer_photo_id']}', '{data['volunteer_passport']}', '{data['volunteer_balance']}') ")
+        query = (
+            f"INSERT INTO volunteers (id, forename, surname, email, phone_number, photo_id, passport, food_balance)" \
+            f"VALUES('{data['volunteer_id']}', '{data['volunteer_first_name']}', '{data['volunteer_last_name']}', '{data['volunteer_email']}','{data['volunteer_phone']}', '{data['volunteer_photo_id']}', '{data['volunteer_passport']}', '{data['volunteer_balance']}') ")
 
         await self.connector.execute(query)
 
@@ -87,11 +90,9 @@ class Request:
         result = await self.connector.fetchval(query)
         return bool(result)
 
-
     async def getAllPoints(self):
         query = "SELECT address FROM points"
         return await self.connector.fetch(query)
-
 
     async def insertNewAdmin(self, data):
         pointName = "%" + data["admin_point"] + "%"
@@ -124,13 +125,11 @@ class Request:
                 WHERE s.id_admin='{adminId}'"
         return await self.connector.fetch(query)
 
-
     async def showPointInfo(self, pointId):
         query = f"SELECT f.* \
                  FROM points f \
                  WHERE id='{pointId}'"
         return await self.connector.fetch(query)
-
 
     async def updatePointFood(self, data, updateType):
         if updateType == "increase":
@@ -151,10 +150,16 @@ class Request:
         await self.connector.execute(query)
 
     async def addNewOrder(self, idVolunteer, data):
-        query = f"INSERT INTO orders (volunteer_id, raw_cat_food, raw_dog_food, dry_dog_food, dry_cat_food, photo)" \
-                f"VALUES('{idVolunteer}', '{data['raw_cat_food']}', '{data['raw_dog_food']}', '{data['dry_dog_food']}', '{data['dry_cat_food']}', '{data['photo_id']}')"
+        query = f"INSERT INTO orders (volunteer_id, raw_cat_food, raw_dog_food, dry_dog_food, dry_cat_food)" \
+                f"VALUES('{idVolunteer}', '{data['raw_cat_food']}', '{data['raw_dog_food']}', '{data['dry_dog_food']}', '{data['dry_cat_food']}')"
         await self.connector.execute(query)
 
+    async def InsertNewPhoto(self, photo):
+        orderIdQuery = "SELECT MAX(id) FROM orders"
+        orderId = await self.connector.execute(orderIdQuery)
+        orderId = orderId.split(" ")[-1]
+        query = f"INSERT INTO photo (photo, order_id) VALUES('{photo}', '{orderId}')"
+        await self.connector.execute(query)
 
     async def updateVolunteerGetOrderStatus(self, idVolunteer, newStatus, pointId=None):
         query = f"UPDATE volunteers SET state = '{newStatus}' WHERE id = '{idVolunteer}'"

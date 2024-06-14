@@ -4,6 +4,8 @@ from core.utils.callbackFactories import AddFoodToPoint
 def getInlineKeyboardVolunteers(allRequests):
     keyboard_builder = InlineKeyboardBuilder()
     for record in allRequests:
+        if record['state'] == 'busy':
+            continue
         keyboard_builder.button(text=record['forename'] + " - " + record['id'], callback_data=f"orderChoose{record['id']}")
     keyboard_builder.button(text='Назад', callback_data='goAdminMenu')
     keyboard_builder.adjust(2)
@@ -86,6 +88,7 @@ def getInlineStartVolunteerKeyBoard():
     keyboard_builder.button(text='Показать питомцев', callback_data='showPets')
     keyboard_builder.button(text='Найти волонтера', callback_data='findProfile')
     keyboard_builder.button(text='Забрать заказ', callback_data='takeFood')
+    keyboard_builder.button(text='Доставить заказ', callback_data='deliveryFood')
 
     keyboard_builder.adjust(1)
     return keyboard_builder.as_markup(one_time_keyboard=True)

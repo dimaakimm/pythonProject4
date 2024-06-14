@@ -79,11 +79,13 @@ async def getDryDogFood(message: Message, state: FSMContext):
 
 @router.message(TakeFoodSteps.GET_PHOTO, F.photo)
 async def getPhotoOrder(message: Message, state: FSMContext, request: Request):
-    await state.update_data(photo_id=message.photo[-1].file_id)
+    await state.update_data(photos=getAllPhotosIds(message.photo))
     await state.update_data(volunteer_id=message.from_user.id)
     order_data = await state.get_data()
 
     await request.addNewOrder(message.from_user.id, order_data)
+    for photo_id in order_data['photos']:
+        await request.InsertNewPhoto(photo_id)
     await message.answer(text="Отлично! Удачной доставки!", reply_markup=gеt_go_menu_keyboard())
 
     await request.updatePointFood(dict(foodType='dry_cat_food', foodVolume=order_data['dry_cat_food'],
@@ -113,3 +115,10 @@ async def getPhotoOrder(message: Message, state: FSMContext, request: Request):
 async def findOutAmountOfFoodatPointof(type, state: FSMContext):
     data = await state.get_data()
     return int(data['pointInfo'][type])
+
+
+def getAllPhotosIds(photos):
+    photoIds = []
+    for photo in photos:
+        photoIds.append(photo.file_id)
+    return photoIds

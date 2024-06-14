@@ -61,3 +61,8 @@ class AddFoodToPointSteps(StatesGroup):
     GET_FOOD_TYPE = State()
     GET_VOLUME = State()
     DONE = State()
+
+
+class DeliveryFoodSteps(StatesGroup):
+    GET_COMMENT = State()
+    GET_PHOTO = State()
