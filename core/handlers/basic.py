@@ -6,6 +6,7 @@ from core.keyboards.inline import getInlineStartVolunteerKeyBoard, gеtStartKeyb
 from aiogram.types import CallbackQuery
 router = Router()
 
+
 @router.message(Command(commands=['start']))
 async def startBotMessage(message: Message):
     await message.answer(f'Привет, {message.from_user.first_name}!\nВойди как админ/волонтер!))',
@@ -22,6 +23,7 @@ async def loginAsAdmin(call: CallbackQuery, request: Request):
         await call.message.answer(f'Тебя нет в списке админов(',
                                   reply_markup=gеtStartKeyboard())
     await call.answer()
+
 
 @router.callback_query(F.data == 'loginAsVolunteer')
 async def loginAsVolunteer(call: CallbackQuery, request: Request):
