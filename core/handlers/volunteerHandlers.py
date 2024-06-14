@@ -20,8 +20,14 @@ async def goVolunteerMenu(call: CallbackQuery, state: FSMContext):
 
 @router.callback_query(F.data == 'showProfile')
 async def showProfile(call: CallbackQuery, request: Request):
-    messageToSend = showVolunteerProfileMessage(await request.showProfile(call.from_user.id))[0]
-    photo_id = showVolunteerProfileMessage(await request.showProfile(call.from_user.id))[1]
+
+    allRequestsVol = await request.showProfile(call.from_user.id)
+    requestBalance = await request.showVolunteerBalance(call.from_user.id)
+
+    result = showVolunteerProfileMessage(allRequestsVol, requestBalance)
+
+    messageToSend = result[0]
+    photo_id = result[1]
     await call.message.answer_photo(caption=messageToSend, photo=photo_id, reply_markup=gеt_go_menu_keyboard())
     await call.answer()
 
@@ -51,16 +57,24 @@ async def petDelete(call: CallbackQuery, request: Request, state: FSMContext):
     await call.answer()
 
 
-def showVolunteerProfileMessage(allRequests):
+def showVolunteerProfileMessage(allRequests, requestBalance):
     message = "ПРОФИЛЬ ВОЛОНТЕРА:\n"
     photo_id = 0
     id = ""
     message += "-------------------------------------------\n"
+
     for record in allRequests:
         message += f"Имя: {record['forename']}\nФамилия: {record['surname']}\nId: {record['id']}\nПочта: {record['email']}\nТелефон: {record['phone_number']}\n"
+    for record in requestBalance:
+        message += (f"\nКоличество корма:\n"
+                    f"Сухого кошачьего корма: {record['dry_cat_food']}\n"
+                    f"Сырого кошачьего корма: {record['raw_cat_food']}\n"
+                    f"Сухого собачьего корма: {record['dry_dog_food']}\n"
+                    f"Сырого собачьего корма: {record['raw_dog_food']}\n")
+    for record in allRequests:
         photo_id = record['photo_id']
         id = record['id']
-        message += "-------------------------------------------\n"
+    message += "-------------------------------------------\n"
     return [message, photo_id, id]
 
 
