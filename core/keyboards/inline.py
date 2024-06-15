@@ -90,6 +90,7 @@ def getInlineStartVolunteerKeyBoard():
     keyboard_builder.button(text='Найти волонтера', callback_data='findProfile')
     keyboard_builder.button(text='Забрать заказ', callback_data='takeFood')
     keyboard_builder.button(text='Доставить заказ', callback_data='deliveryFood')
+    keyboard_builder.button(text='Покормить животных', callback_data='feedAnimals')
     keyboard_builder.button(text='Выйти из профиля', callback_data='LogOut')
 
     keyboard_builder.adjust(1)
@@ -162,6 +163,16 @@ def getInlineKeyboardPointAddAnotherFood():
     keyboard_builder = InlineKeyboardBuilder()
     keyboard_builder.button(text='Добавить ещё корм', callback_data="addFoodToPoint")
     keyboard_builder.button(text='В меню', callback_data='goAdminMenu')
+    keyboard_builder.adjust(1)
+    return keyboard_builder.as_markup(one_time_keyboard=True)
+
+def chooseTypeOfFood():
+    keyboard_builder = InlineKeyboardBuilder()
+    keyboard_builder.button(text='Cухой кошачий', callback_data="dry_cat_food")
+    keyboard_builder.button(text='Влажный кошачий', callback_data="raw_cat_food")
+    keyboard_builder.button(text='Сухой собачий', callback_data="dry_dog_food")
+    keyboard_builder.button(text='Влажный собачий', callback_data="raw_dog_food")
+    keyboard_builder.button(text='Назад', callback_data="goVolunteerMenu")
     keyboard_builder.adjust(1)
     return keyboard_builder.as_markup(one_time_keyboard=True)
 

@@ -69,3 +69,13 @@ class AddFoodToPointSteps(StatesGroup):
 class DeliveryFoodSteps(StatesGroup):
     GET_COMMENT = State()
     GET_PHOTO = State()
+
+class  FeedAnimalSteps(StatesGroup):
+    START = State()
+    GET_RAW_CAT_FOOD = State()
+    GET_DRY_CAT_FOOD = State()
+    GET_RAW_DOG_FOOD = State()
+    GET_DRY_DOG_FOOD = State()
+    GET_COMMENT = State()
+    GET_PHOTO = State()
+    DONE = State()

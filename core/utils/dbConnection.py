@@ -57,6 +57,15 @@ class Request:
                 f" WHERE volunteer_id = '{toId}'"
         await self.connector.execute(query)
 
+    async def updateFoodVolunteer(self, volunteerId, raw_cat_food, dry_cat_food, raw_dog_food, dry_dog_food):
+        query = f"UPDATE volunteers_food SET" \
+                f" raw_cat_food = {raw_cat_food}," \
+                f" dry_cat_food = {dry_cat_food}," \
+                f" raw_dog_food = {raw_dog_food}," \
+                f" dry_dog_food = {dry_dog_food}" \
+                f" WHERE volunteer_id = '{volunteerId}'"
+        await self.connector.execute(query)
+
     async def add_data_pet(self, data, vol_id):
         query = f"INSERT INTO pets (photo_id, name, is_sterilized, district, info, vol_id) " \
                 f"VALUES('{data['photo_id']}', '{data['name']}', " \

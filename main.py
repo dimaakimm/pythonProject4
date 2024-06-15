@@ -5,8 +5,10 @@ from aiogram.client.default import DefaultBotProperties
 
 from core.settings import settings
 from core.middlewares.db import DbSession
-from core.handlers import basic, volunteerHandlers, adminHandlers, addPetHandlers, addAdminHandlers, addVolunteerHandlers, volunteerFriendsHandlers, volunteerOrder
-from core.handlers import basic, volunteerHandlers, adminHandlers, addPetHandlers, addAdminHandlers, addVolunteerHandlers, volunteerFriendsHandlers, takeFoodHandlers
+
+from core.handlers import (basic, volunteerHandlers, adminHandlers, addPetHandlers, addAdminHandlers,
+                           addVolunteerHandlers, volunteerFriendsHandlers,
+                           feedPetsHandlers, takeFoodHandlers, volunteerOrder)
 import logging
 
 
@@ -23,6 +25,7 @@ async def start():
         dp.include_router(volunteerFriendsHandlers.router)
         dp.include_router(volunteerOrder.router)
         dp.include_router(takeFoodHandlers.router)
+        dp.include_router(feedPetsHandlers.router)
         pool_connect = await asyncpg.create_pool(host=settings.db.host, user=settings.db.user,
                                                  password=settings.db.password, database=settings.db.database,
                                                  port=settings.db.port, command_timeout=60)
