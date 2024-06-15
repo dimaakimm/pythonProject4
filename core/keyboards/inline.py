@@ -176,3 +176,11 @@ def chooseTypeOfFood():
     keyboard_builder.adjust(1)
     return keyboard_builder.as_markup(one_time_keyboard=True)
 
+
+def choosePetSterilized():
+    keyboard_builder = InlineKeyboardBuilder()
+    keyboard_builder.button(text='Да', callback_data="sterilized")
+    keyboard_builder.button(text='Нет', callback_data="not_sterilized")
+    keyboard_builder.button(text='Назад', callback_data="goVolunteerMenu")
+    keyboard_builder.adjust(1)
+    return keyboard_builder.as_markup(one_time_keyboard=True)
