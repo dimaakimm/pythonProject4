@@ -47,9 +47,9 @@ def getInlineUserSettingsKeyboard():
     return keyboard_builder.as_markup(one_time_keyboard=True)
 
 
-def gеt_accept_keyboard(fromId, toId, volume):
+def gеt_accept_keyboard(fromId, toId, volume1, volume2, volume3, volume4):
     keyboard_builder = InlineKeyboardBuilder()
-    keyboard_builder.button(text='Согласиться', callback_data=f'accept{fromId}-{toId}-{volume}')
+    keyboard_builder.button(text='Согласиться', callback_data=f'accept-{fromId}-{toId}-{volume1}-{volume2}-{volume3}-{volume4}')
     keyboard_builder.button(text='Отказать', callback_data=f'decline{fromId}-{toId}')
     keyboard_builder.button(text='Назад', callback_data='goVolunteerMenu')
     keyboard_builder.adjust(2)

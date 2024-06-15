@@ -41,10 +41,20 @@ class Request:
         query = f"SELECT * FROM pets WHERE vol_id='{userId}'"
         return await self.connector.fetch(query)
 
-    async def giveFoodFromVtoV(self, fromId, toId, volume):
-        query = f"UPDATE volunteers SET food_balance = food_balance - {volume} WHERE id = '{fromId}'"
+    async def giveFoodFromVtoV(self, fromId, toId, raw_cat_food, dry_cat_food, raw_dog_food, dry_dog_food):
+        query = f"UPDATE volunteers_food SET" \
+                f" raw_cat_food = raw_cat_food - {raw_cat_food}," \
+                f" dry_cat_food = dry_cat_food - {dry_cat_food}," \
+                f" raw_dog_food = dry_cat_food - {raw_dog_food}," \
+                f" dry_dog_food = dry_cat_food - {dry_dog_food}" \
+                f" WHERE volunteer_id = '{fromId}'"
         await self.connector.execute(query)
-        query = f"UPDATE volunteers SET food_balance = food_balance + {volume} WHERE id = '{toId}'"
+        query = f"UPDATE volunteers_food SET" \
+                f" raw_cat_food = raw_cat_food + {raw_cat_food}," \
+                f" dry_cat_food = dry_cat_food + {dry_cat_food}," \
+                f" raw_dog_food = dry_cat_food + {raw_dog_food}," \
+                f" dry_dog_food = dry_cat_food + {dry_dog_food}" \
+                f" WHERE volunteer_id = '{toId}'"
         await self.connector.execute(query)
 
     async def add_data_pet(self, data, vol_id):
