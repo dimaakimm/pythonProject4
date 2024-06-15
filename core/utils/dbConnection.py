@@ -33,6 +33,10 @@ class Request:
         query = f"SELECT address FROM points WHERE id = '{pointId}' LIMIT 1"
         return await self.connector.fetchval(query)
 
+    async def getVolunteerFoodById(self, volunteerId):
+        query = f"SELECT * FROM volunteers_food LIMIT 1" #ДОБАВИТЬ ЧТОБЫ БРАЛАСЬ ИНФА ПО АЙДИШНИКУ ИЗ VOLUNTEERS_FOOD
+        return await self.connector.fetch(query)
+
     async def showVolunteersPets(self, userId):
         query = f"SELECT * FROM pets WHERE vol_id='{userId}'"
         return await self.connector.fetch(query)

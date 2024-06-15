@@ -12,8 +12,11 @@ class VolStepsFormAddPet(StatesGroup):
 
 class VolFriends(StatesGroup):
     GET_PROFILE = State()
+    GET_RAW_CAT_FOOD = State()
+    GET_DRY_CAT_FOOD = State()
+    GET_RAW_DOG_FOOD = State()
+    GET_DRY_DOG_FOOD = State()
     GET_PHOTO = State()
-    GIVE_FOOD = State()
 
 
 class CreatingAdminSteps(StatesGroup):
