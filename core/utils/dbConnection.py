@@ -34,7 +34,7 @@ class Request:
         return await self.connector.fetchval(query)
 
     async def getVolunteerFoodById(self, volunteerId):
-        query = f"SELECT * FROM volunteers_food LIMIT 1" #ДОБАВИТЬ ЧТОБЫ БРАЛАСЬ ИНФА ПО АЙДИШНИКУ ИЗ VOLUNTEERS_FOOD
+        query = f"SELECT * FROM volunteers_food WHERE volunteer_id = '{volunteerId}'"
         return await self.connector.fetch(query)
 
     async def showVolunteersPets(self, userId):
@@ -45,15 +45,15 @@ class Request:
         query = f"UPDATE volunteers_food SET" \
                 f" raw_cat_food = raw_cat_food - {raw_cat_food}," \
                 f" dry_cat_food = dry_cat_food - {dry_cat_food}," \
-                f" raw_dog_food = dry_cat_food - {raw_dog_food}," \
-                f" dry_dog_food = dry_cat_food - {dry_dog_food}" \
+                f" raw_dog_food = raw_dog_food - {raw_dog_food}," \
+                f" dry_dog_food = dry_dog_food - {dry_dog_food}" \
                 f" WHERE volunteer_id = '{fromId}'"
         await self.connector.execute(query)
         query = f"UPDATE volunteers_food SET" \
                 f" raw_cat_food = raw_cat_food + {raw_cat_food}," \
                 f" dry_cat_food = dry_cat_food + {dry_cat_food}," \
-                f" raw_dog_food = dry_cat_food + {raw_dog_food}," \
-                f" dry_dog_food = dry_cat_food + {dry_dog_food}" \
+                f" raw_dog_food = raw_dog_food + {raw_dog_food}," \
+                f" dry_dog_food = dry_dog_food + {dry_dog_food}" \
                 f" WHERE volunteer_id = '{toId}'"
         await self.connector.execute(query)
 

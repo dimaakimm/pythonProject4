@@ -30,7 +30,7 @@ async def getProfile(message: Message, state: FSMContext, request: Request):
 @router.callback_query(F.data == 'volGiveFood')
 async def volGiveFood(call: CallbackQuery, request: Request, state: FSMContext):
     await state.set_state(VolFriends.GET_RAW_CAT_FOOD)
-    await call.message.answer("Введите количество сырого кошачьего корма", reply_markup=gеt_go_menu_keyboard())
+    await call.message.answer("Введите количество влажного корма для кошек", reply_markup=gеt_go_menu_keyboard())
 
 @router.message(VolFriends.GET_RAW_CAT_FOOD, F.text)
 async def getRawCatFood(message: Message, state: FSMContext):
@@ -41,7 +41,7 @@ async def getRawCatFood(message: Message, state: FSMContext):
     else:
         await state.update_data(raw_cat_food=message.text)
         await state.set_state(VolFriends.GET_DRY_CAT_FOOD)
-        await message.answer(text="Введите количество сухого кошачьего корма", reply_markup=gеt_go_menu_keyboard())
+        await message.answer(text="Введите количество сухого корма для кошек", reply_markup=gеt_go_menu_keyboard())
 
 
 
@@ -53,7 +53,7 @@ async def getDryCatFood(message: Message, state: FSMContext):
     else:
         await state.update_data(dry_cat_food=message.text)
         await state.set_state(VolFriends.GET_RAW_DOG_FOOD)
-        await message.answer(text="Введите количество сырого собачьего корма", reply_markup=gеt_go_menu_keyboard())
+        await message.answer(text="Введите количество влажного корма для собак", reply_markup=gеt_go_menu_keyboard())
 
 
 @router.message(VolFriends.GET_RAW_DOG_FOOD, F.text)
@@ -64,7 +64,7 @@ async def getRawDogFood(message: Message, state: FSMContext):
     else:
         await state.update_data(raw_dog_food=message.text)
         await state.set_state(VolFriends.GET_DRY_DOG_FOOD)
-        await message.answer(text="Введите количество сухого собачьего корма", reply_markup=gеt_go_menu_keyboard())
+        await message.answer(text="Введите количество сухого корма для собак", reply_markup=gеt_go_menu_keyboard())
 
 
 @router.message(VolFriends.GET_DRY_DOG_FOOD, F.text)
@@ -86,10 +86,10 @@ async def getPhotoOrder(message: Message, state: FSMContext, request: Request, b
     data = await state.get_data()
     print(data)
     await bot.send_message(chat_id=data['toId'], text=f"Вам пришел запрос от {message.from_user.id} чтобы передать вам\n"
-                           f"{data['raw_cat_food']}кг влажного кошачьего корма!\n"
-                           f"{data['dry_cat_food']}кг сухого кошачьего корма!\n"
-                           f"{data['raw_dog_food']}кг влыжного собачьего корма!\n"
-                           f"{data['dry_dog_food']}кг сухого собачьего корма!", reply_markup=gеt_accept_keyboard(message.from_user.id, data['toId'], data['raw_cat_food'], data['dry_cat_food'], data['raw_dog_food'], data['dry_dog_food']))
+                           f"{data['raw_cat_food']}кг влажного корма для кошек!\n"
+                           f"{data['dry_cat_food']}кг сухого корма для кошек!\n"
+                           f"{data['raw_dog_food']}кг влажного корма для собак!\n"
+                           f"{data['dry_dog_food']}кг сухого корма для собак!", reply_markup=gеt_accept_keyboard(message.from_user.id, data['toId'], data['raw_cat_food'], data['dry_cat_food'], data['raw_dog_food'], data['dry_dog_food']))
     await message.answer("Запрос отправлен!", reply_markup=gеt_go_menu_keyboard())
 
 
@@ -120,9 +120,10 @@ async def acceptFood(call: CallbackQuery, request: Request, bot: Bot):
 
 @router.callback_query(F.data.startswith("decline"))
 async def declineFood(call: CallbackQuery, request: Request, bot: Bot):
-    symbIndex = call.data.index('-')
-    from_id = call.data[6: symbIndex]
-    to_id = call.data[symbIndex+1:]
+    data = call.data.split('-')
+    from_id = data[1]
+    to_id = data[2]
+    print(data)
     await call.message.answer(text="Успешно!", reply_markup=gеt_go_menu_keyboard())
     await bot.send_message(chat_id=from_id, text=f"Волонтер {to_id} отклонил ваш запрос!")
     await call.answer()

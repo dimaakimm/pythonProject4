@@ -80,10 +80,10 @@ async def showPointInfo(call: CallbackQuery, request: Request, state: FSMContext
     for record in pointInfo:
         await state.update_data(pointId=record['id'])
         await call.message.answer(f"На точке по адресу {record['address']}:\n"
-                                  f"{record['dry_cat_food']} кг сухого кошачьего корма\n"
-                                  f"{record['wet_cat_food']} кг влажного кошачьего корма\n"
-                                  f"{record['dry_dog_food']} кг сухого собачьего корма\n"
-                                  f"{record['wet_dog_food']} кг влажного собачьего корма\n",
+                                  f"{record['dry_cat_food']} кг сухого корма для кошек\n"
+                                  f"{record['wet_cat_food']} кг влажного корма для кошек\n"
+                                  f"{record['dry_dog_food']} кг сухого корма для собак\n"
+                                  f"{record['wet_dog_food']} кг влажного корма для собак\n",
                                   reply_markup=getInlineKeyboardPointInfo())
 
 

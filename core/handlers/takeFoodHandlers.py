@@ -21,11 +21,11 @@ async def choosePointForTake(call: CallbackQuery, state: FSMContext, request: Re
     for record in pointInfo:
         await state.update_data(pointInfo=record)
         await call.message.answer(f"На точке по адресу {record['address']}:\n"
-                                  f"{record['wet_cat_food']} кг влажного кошачьего корма\n"
-                                  f"{record['dry_cat_food']} кг сухого кошачьего корма\n"
-                                  f"{record['wet_dog_food']} кг влажного собачьего корма\n"
-                                  f"{record['dry_dog_food']} кг сухого собачьего корма\n")
-    await call.message.answer(text="Введите количество сырого кошачьего корма", reply_markup=gеt_go_menu_keyboard())
+                                  f"{record['wet_cat_food']} кг влажного корма для кошек\n"
+                                  f"{record['dry_cat_food']} кг сухого корма для кошек\n"
+                                  f"{record['wet_dog_food']} кг влажного корма для собак\n"
+                                  f"{record['dry_dog_food']} кг сухого корма для собак\n")
+    await call.message.answer(text="Введите количество влажного корма для кошек", reply_markup=gеt_go_menu_keyboard())
 
 
 @router.message(TakeFoodSteps.GET_RAW_CAT_FOOD, F.text)
@@ -38,7 +38,7 @@ async def getRawCatFood(message: Message, state: FSMContext):
     else:
         await state.update_data(raw_cat_food=message.text)
         await state.set_state(TakeFoodSteps.GET_DRY_CAT_FOOD)
-        await message.answer(text="Введите количество сухого кошачьего корма", reply_markup=gеt_go_menu_keyboard())
+        await message.answer(text="Введите количество сухого корма для кошек", reply_markup=gеt_go_menu_keyboard())
 
 
 @router.message(TakeFoodSteps.GET_DRY_CAT_FOOD, F.text)
@@ -49,7 +49,7 @@ async def getDryCatFood(message: Message, state: FSMContext):
     else:
         await state.update_data(dry_cat_food=message.text)
         await state.set_state(TakeFoodSteps.GET_RAW_DOG_FOOD)
-        await message.answer(text="Введите количество сырого собачьего корма", reply_markup=gеt_go_menu_keyboard())
+        await message.answer(text="Введите количество влажного корма для собак", reply_markup=gеt_go_menu_keyboard())
 
 
 @router.message(TakeFoodSteps.GET_RAW_DOG_FOOD, F.text)
@@ -62,7 +62,7 @@ async def getRawDogFood(message: Message, state: FSMContext):
     else:
         await state.update_data(raw_dog_food=message.text)
         await state.set_state(TakeFoodSteps.GET_DRY_DOG_FOOD)
-        await message.answer(text="Введите количество сухого собачьего корма", reply_markup=gеt_go_menu_keyboard())
+        await message.answer(text="Введите количество сухого корма для собак", reply_markup=gеt_go_menu_keyboard())
 
 
 @router.message(TakeFoodSteps.GET_DRY_DOG_FOOD, F.text)

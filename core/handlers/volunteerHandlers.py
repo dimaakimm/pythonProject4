@@ -67,10 +67,10 @@ def showVolunteerProfileMessage(allRequests, requestBalance):
         message += f"Имя: {record['forename']}\nФамилия: {record['surname']}\nId: {record['id']}\nПочта: {record['email']}\nТелефон: {record['phone_number']}\n"
     for record in requestBalance:
         message += (f"\nКоличество корма:\n"
-                    f"Сухого кошачьего корма: {record['dry_cat_food']}\n"
-                    f"Сырого кошачьего корма: {record['raw_cat_food']}\n"
-                    f"Сухого собачьего корма: {record['dry_dog_food']}\n"
-                    f"Сырого собачьего корма: {record['raw_dog_food']}\n")
+                    f"Сухого корма для кошек: {record['dry_cat_food']}\n"
+                    f"Влажного корма для кошек: {record['raw_cat_food']}\n"
+                    f"Сухого корма для собак: {record['dry_dog_food']}\n"
+                    f"Влажного корма для собак: {record['raw_dog_food']}\n")
     for record in allRequests:
         photo_id = record['photo_id']
         id = record['id']
