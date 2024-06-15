@@ -176,6 +176,11 @@ class Request:
         query = f"INSERT INTO orders (volunteer_id, raw_cat_food, raw_dog_food, dry_dog_food, dry_cat_food)" \
                 f"VALUES('{idVolunteer}', '{data['raw_cat_food']}', '{data['raw_dog_food']}', '{data['dry_dog_food']}', '{data['dry_cat_food']}')"
         await self.connector.execute(query)
+    async def addNewOrderFeed(self, idVolunteer, data):
+        type = "feed"
+        query = f"INSERT INTO orders (volunteer_id, raw_cat_food, raw_dog_food, dry_dog_food, dry_cat_food, delivery_comment, type_delivery)" \
+                f"VALUES('{idVolunteer}', '{data['raw_cat_food_delivery']}', '{data['raw_dog_food_delivery']}', '{data['dry_dog_food_delivery']}', '{data['dry_cat_food_delivery']}', '{data['comment']}', '{type}')"
+        await self.connector.execute(query)
 
     async def InsertNewPhoto(self, photo):
         orderIdQuery = "SELECT MAX(id) FROM orders"
