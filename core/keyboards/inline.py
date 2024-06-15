@@ -31,6 +31,7 @@ def getInlineStartAdminKeyBoard():
     keyboard_builder.button(text='Настройки пункта', callback_data='getPointSettings')
     keyboard_builder.button(text='Работа с волонтерами', callback_data='getVolunteerWork')
     keyboard_builder.button(text='Назад', callback_data='goAdminMenu')
+    keyboard_builder.button(text='Выйти из профиля', callback_data='LogOut')
     keyboard_builder.adjust(2)
     return keyboard_builder.as_markup(one_time_keyboard=True)
 
@@ -89,6 +90,7 @@ def getInlineStartVolunteerKeyBoard():
     keyboard_builder.button(text='Найти волонтера', callback_data='findProfile')
     keyboard_builder.button(text='Забрать заказ', callback_data='takeFood')
     keyboard_builder.button(text='Доставить заказ', callback_data='deliveryFood')
+    keyboard_builder.button(text='Выйти из профиля', callback_data='LogOut')
 
     keyboard_builder.adjust(1)
     return keyboard_builder.as_markup(one_time_keyboard=True)
