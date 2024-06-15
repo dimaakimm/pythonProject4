@@ -82,6 +82,7 @@ async def getPhotoOrder(message: Message, state: FSMContext, request: Request):
     await state.update_data(photos=getAllPhotosIds(message.photo))
     await state.update_data(volunteer_id=message.from_user.id)
     order_data = await state.get_data()
+    await state.clear()
 
     await request.addNewOrder(message.from_user.id, order_data)
     for photo_id in order_data['photos']:
@@ -109,7 +110,6 @@ async def getPhotoOrder(message: Message, state: FSMContext, request: Request):
 
 
     await request.updateVolunteerGetOrderStatus(message.from_user.id, "wait")
-    await state.clear()
 
 
 async def findOutAmountOfFoodatPointof(type, state: FSMContext):
