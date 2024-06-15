@@ -136,7 +136,6 @@ def showVolunteerProfileMessage(allRequests, requestBalance):
     message = "ПРОФИЛЬ ВОЛОНТЕРА:\n"
     photo_id = 0
     id = ""
-    message += "-------------------------------------------\n"
 
     for record in allRequests:
         message += f"Имя: {record['forename']}\nФамилия: {record['surname']}\nId: {record['id']}\nПочта: {record['email']}\nТелефон: {record['phone_number']}\n"
@@ -149,5 +148,4 @@ def showVolunteerProfileMessage(allRequests, requestBalance):
     for record in allRequests:
         photo_id = record['photo_id']
         id = record['id']
-    message += "-------------------------------------------\n"
     return [message, photo_id, id]
