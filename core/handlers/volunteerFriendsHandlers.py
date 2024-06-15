@@ -19,13 +19,19 @@ async def findProfile(call: CallbackQuery, state: FSMContext, request: Request):
 
 @router.message(F.text, VolFriends.GET_PROFILE)
 async def getProfile(message: Message, state: FSMContext, request: Request):
-    messageToSend = showVolunteerProfileMessage(await request.showProfile(message.from_user.id))[0]
-    photo_id = showVolunteerProfileMessage(await request.showProfile(message.from_user.id))[1]
-    volunteerId = showVolunteerProfileMessage(await request.showProfile(message.from_user.id))[2]
+    allRequestsVol = await request.showProfile(message.text)
+    requestBalance = await request.showVolunteerBalance(message.text)
+
+    result = showVolunteerProfileMessage(allRequestsVol, requestBalance)
+    messageToSend = result[0]
+    photo_id = result[1]
+    volunteerId = result[2]
     volunteerFoodInfo = (await request.getVolunteerFoodById(volunteerId))[0]
     await state.update_data(toId=volunteerId)
     await state.update_data(food=volunteerFoodInfo)
     await message.answer_photo(caption=messageToSend, photo=photo_id, reply_markup=gеt_volunteer_keyboard())
+
+
 
 @router.callback_query(F.data == 'volGiveFood')
 async def volGiveFood(call: CallbackQuery, request: Request, state: FSMContext):
@@ -35,7 +41,7 @@ async def volGiveFood(call: CallbackQuery, request: Request, state: FSMContext):
 @router.message(VolFriends.GET_RAW_CAT_FOOD, F.text)
 async def getRawCatFood(message: Message, state: FSMContext):
     kgFoodVolunteerhas = int(await findOutAmountOfFoodVolunteer('raw_cat_food', state))
-    print(kgFoodVolunteerhas)
+
     if (int(message.text) > kgFoodVolunteerhas):
         await message.answer(text=f"Такого количества корма у вас нет", reply_markup=gеt_go_menu_keyboard())
     else:
@@ -84,7 +90,6 @@ async def getDryDogFood(message: Message, state: FSMContext):
 async def getPhotoOrder(message: Message, state: FSMContext, request: Request, bot: Bot):
     await state.set_state(None)
     data = await state.get_data()
-    print(data)
     await bot.send_message(chat_id=data['toId'], text=f"Вам пришел запрос от {message.from_user.id} чтобы передать вам\n"
                            f"{data['raw_cat_food']}кг влажного корма для кошек!\n"
                            f"{data['dry_cat_food']}кг сухого корма для кошек!\n"
@@ -123,19 +128,26 @@ async def declineFood(call: CallbackQuery, request: Request, bot: Bot):
     data = call.data.split('-')
     from_id = data[1]
     to_id = data[2]
-    print(data)
     await call.message.answer(text="Успешно!", reply_markup=gеt_go_menu_keyboard())
     await bot.send_message(chat_id=from_id, text=f"Волонтер {to_id} отклонил ваш запрос!")
     await call.answer()
 
-def showVolunteerProfileMessage(allRequests):
+def showVolunteerProfileMessage(allRequests, requestBalance):
     message = "ПРОФИЛЬ ВОЛОНТЕРА:\n"
     photo_id = 0
     id = ""
     message += "-------------------------------------------\n"
+
     for record in allRequests:
         message += f"Имя: {record['forename']}\nФамилия: {record['surname']}\nId: {record['id']}\nПочта: {record['email']}\nТелефон: {record['phone_number']}\n"
+    for record in requestBalance:
+        message += (f"\nКоличество корма:\n"
+                    f"Сухого корма для кошек: {record['dry_cat_food']}\n"
+                    f"Влажного корма для кошек: {record['raw_cat_food']}\n"
+                    f"Сухого корма для собак: {record['dry_dog_food']}\n"
+                    f"Влажного корма для собак: {record['raw_dog_food']}\n")
+    for record in allRequests:
         photo_id = record['photo_id']
         id = record['id']
-        message += "-------------------------------------------\n"
+    message += "-------------------------------------------\n"
     return [message, photo_id, id]
