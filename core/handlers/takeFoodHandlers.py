@@ -21,10 +21,10 @@ async def choosePointForTake(call: CallbackQuery, state: FSMContext, request: Re
     for record in pointInfo:
         await state.update_data(pointInfo=record)
         await call.message.answer(f"На точке по адресу {record['address']}:\n"
-                                  f"{record['wet_cat_food']} кг влажного корма для кошек\n"
-                                  f"{record['dry_cat_food']} кг сухого корма для кошек\n"
-                                  f"{record['wet_dog_food']} кг влажного корма для собак\n"
-                                  f"{record['dry_dog_food']} кг сухого корма для собак\n")
+                                  f"{record['wet_cat_food']}г влажного корма для кошек\n"
+                                  f"{record['dry_cat_food']}г сухого корма для кошек\n"
+                                  f"{record['wet_dog_food']}г влажного корма для собак\n"
+                                  f"{record['dry_dog_food']}г сухого корма для собак\n")
     await call.message.answer(text="Введите количество влажного корма для кошек", reply_markup=gеt_go_menu_keyboard())
 
 
@@ -33,7 +33,7 @@ async def getRawCatFood(message: Message, state: FSMContext):
     kgFoodOnPoint = int(await findOutAmountOfFoodatPointof('wet_cat_food', state))
     if (int(message.text) > kgFoodOnPoint):
         await message.answer(
-            text=f"Такого количества нет, на точке только {kgFoodOnPoint} кг корма !\nПовторите ввод",
+            text=f"Такого количества нет, на точке только {kgFoodOnPoint}г корма !\nПовторите ввод",
             reply_markup=gеt_go_menu_keyboard())
     else:
         await state.update_data(raw_cat_food=message.text)
@@ -45,7 +45,7 @@ async def getRawCatFood(message: Message, state: FSMContext):
 async def getDryCatFood(message: Message, state: FSMContext):
     kgFoodOnPoint = int(await findOutAmountOfFoodatPointof('dry_cat_food', state))
     if (int(message.text) > kgFoodOnPoint):
-        await message.answer(text=f"Такого количества нет, на точке только {kgFoodOnPoint} кг корма !\nПовторите ввод", reply_markup=gеt_go_menu_keyboard())
+        await message.answer(text=f"Такого количества нет, на точке только {kgFoodOnPoint}г корма !\nПовторите ввод", reply_markup=gеt_go_menu_keyboard())
     else:
         await state.update_data(dry_cat_food=message.text)
         await state.set_state(TakeFoodSteps.GET_RAW_DOG_FOOD)
@@ -57,7 +57,7 @@ async def getRawDogFood(message: Message, state: FSMContext):
     kgFoodOnPoint = int(await findOutAmountOfFoodatPointof('wet_dog_food', state))
     if (int(message.text) > kgFoodOnPoint):
         await message.answer(
-            text=f"Такого количества нет, на точке только {kgFoodOnPoint} кг корма !\nПовторите ввод",
+            text=f"Такого количества нет, на точке только {kgFoodOnPoint}г корма !\nПовторите ввод",
             reply_markup=gеt_go_menu_keyboard())
     else:
         await state.update_data(raw_dog_food=message.text)
@@ -69,7 +69,7 @@ async def getRawDogFood(message: Message, state: FSMContext):
 async def getDryDogFood(message: Message, state: FSMContext):
     kgFoodOnPoint = int(await findOutAmountOfFoodatPointof('dry_dog_food', state))
     if (int(message.text) > kgFoodOnPoint):
-        await message.answer(text=f"Такого количества нет, на точке только {kgFoodOnPoint} кг корма !\nПовторите ввод", reply_markup=gеt_go_menu_keyboard())
+        await message.answer(text=f"Такого количества нет, на точке только {kgFoodOnPoint}г корма !\nПовторите ввод", reply_markup=gеt_go_menu_keyboard())
     else:
         await state.update_data(dry_dog_food=message.text)
         await state.set_state(TakeFoodSteps.GET_PHOTO)

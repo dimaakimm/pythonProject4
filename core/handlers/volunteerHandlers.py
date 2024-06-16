@@ -66,25 +66,14 @@ def showVolunteerProfileMessage(allRequests, requestBalance):
         message += f"Имя: {record['forename']}\nФамилия: {record['surname']}\nId: {record['id']}\nПочта: {record['email']}\nТелефон: {record['phone_number']}\n"
     for record in requestBalance:
         message += (f"\nКоличество корма:\n"
-                    f"Сухого корма для кошек: {record['dry_cat_food']}\n"
-                    f"Влажного корма для кошек: {record['raw_cat_food']}\n"
-                    f"Сухого корма для собак: {record['dry_dog_food']}\n"
-                    f"Влажного корма для собак: {record['raw_dog_food']}\n")
+                    f"Сухого корма для кошек: {record['dry_cat_food']}г\n"
+                    f"Влажного корма для кошек: {record['raw_cat_food']}г\n"
+                    f"Сухого корма для собак: {record['dry_dog_food']}г\n"
+                    f"Влажного корма для собак: {record['raw_dog_food']}г\n")
     for record in allRequests:
         photo_id = record['photo_id']
         id = record['id']
     return [message, photo_id, id]
-
-
-def showProfileMessage(allRequests):
-    message = "ВАШ ПРОФИЛЬ:\n"
-    photo_id = 0
-    message += "-------------------------------------------\n"
-    for record in allRequests:
-        message += f"Имя: {record['forename']}\nФамилия: {record['surname']}\nId: {record['id']}\nПочта: {record['email']}\nТелефон: {record['phone_number']}\n"
-        photo_id = record[photo_id]
-        message += "-------------------------------------------\n"
-    return [message, photo_id]
 
 
 def takeVoluneersPets(allRequests):

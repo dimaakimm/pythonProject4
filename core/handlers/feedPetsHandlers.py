@@ -25,36 +25,36 @@ async def feedAnimals(call: CallbackQuery, state: FSMContext, request: Request):
     message = "У тебя есть:\n"
     for record in requestBalance:
         message += (
-            f"Сухого корма для кошек: {record['dry_cat_food']}\n"
-            f"Влажного корма для кошек: {record['raw_cat_food']}\n"
-            f"Сухого корма для собак: {record['dry_dog_food']}\n"
-            f"Влажного корма для собак: {record['raw_dog_food']}\n")
-    await call.message.answer(text=message, reply_markup=gеt_go_menu_keyboard())
+            f"Сухого корма для кошек: {record['dry_cat_food']}г\n"
+            f"Влажного корма для кошек: {record['raw_cat_food']}г\n"
+            f"Сухого корма для собак: {record['dry_dog_food']}г\n"
+            f"Влажного корма для собак: {record['raw_dog_food']}г\n")
+    await call.message.answer(text=message, reply_markup=None)
     await call.message.answer("Какой тип корма вы хотите выбрать?", reply_markup=chooseTypeOfFood())
 
 
 @router.callback_query(F.data == "dry_cat_food")
 async def getDryCatFood(call: CallbackQuery, state: FSMContext):
     await state.set_state(FeedAnimalSteps.GET_DRY_CAT_FOOD)
-    await call.message.answer(text="Введите количество сухого корма для кошек", reply_markup=gеt_go_menu_keyboard())
+    await call.message.answer(text="Введите количество сухого корма для кошек (граммы)", reply_markup=gеt_go_menu_keyboard())
 
 
 @router.callback_query(F.data == "raw_cat_food")
 async def getDryCatFood(call: CallbackQuery, state: FSMContext):
     await state.set_state(FeedAnimalSteps.GET_RAW_CAT_FOOD)
-    await call.message.answer(text="Введите количество влажного корма для кошек", reply_markup=gеt_go_menu_keyboard())
+    await call.message.answer(text="Введите количество влажного корма для кошек (граммы)", reply_markup=gеt_go_menu_keyboard())
 
 
 @router.callback_query(F.data == "dry_dog_food")
 async def getDryCatFood(call: CallbackQuery, state: FSMContext):
     await state.set_state(FeedAnimalSteps.GET_DRY_DOG_FOOD)
-    await call.message.answer(text="Введите количество сухого корма для собак", reply_markup=gеt_go_menu_keyboard())
+    await call.message.answer(text="Введите количество сухого корма для собак (граммы)", reply_markup=gеt_go_menu_keyboard())
 
 
 @router.callback_query(F.data == "raw_dog_food")
 async def getDryCatFood(call: CallbackQuery, state: FSMContext):
     await state.set_state(FeedAnimalSteps.GET_RAW_DOG_FOOD)
-    await call.message.answer(text="Введите количество влажного корма для собак", reply_markup=gеt_go_menu_keyboard())
+    await call.message.answer(text="Введите количество влажного корма для собак (граммы)", reply_markup=gеt_go_menu_keyboard())
 
 
 @router.message(FeedAnimalSteps.GET_DRY_CAT_FOOD, F.text)
