@@ -176,8 +176,15 @@ class Request:
         query = f"INSERT INTO orders (volunteer_id, raw_cat_food, raw_dog_food, dry_dog_food, dry_cat_food)" \
                 f"VALUES('{idVolunteer}', '{data['raw_cat_food']}', '{data['raw_dog_food']}', '{data['dry_dog_food']}', '{data['dry_cat_food']}')"
         await self.connector.execute(query)
+
     async def addNewOrderFeed(self, idVolunteer, data):
         type = "feed"
+        query = f"INSERT INTO orders (volunteer_id, raw_cat_food, raw_dog_food, dry_dog_food, dry_cat_food, delivery_comment, type_delivery)" \
+                f"VALUES('{idVolunteer}', '{data['raw_cat_food_delivery']}', '{data['raw_dog_food_delivery']}', '{data['dry_dog_food_delivery']}', '{data['dry_cat_food_delivery']}', '{data['comment']}', '{type}')"
+        await self.connector.execute(query)
+
+    async def addNewOrderDelivery(self, idVolunteer, data):
+        type = "delivery"
         query = f"INSERT INTO orders (volunteer_id, raw_cat_food, raw_dog_food, dry_dog_food, dry_cat_food, delivery_comment, type_delivery)" \
                 f"VALUES('{idVolunteer}', '{data['raw_cat_food_delivery']}', '{data['raw_dog_food_delivery']}', '{data['dry_dog_food_delivery']}', '{data['dry_cat_food_delivery']}', '{data['comment']}', '{type}')"
         await self.connector.execute(query)
@@ -187,6 +194,15 @@ class Request:
         orderId = await self.connector.execute(orderIdQuery)
         orderId = orderId.split(" ")[-1]
         query = f"INSERT INTO photo (photo, order_id) VALUES('{photo}', '{orderId}')"
+        await self.connector.execute(query)
+
+    async def InsertNewPhotoDelivery(self, photo):
+        orderIdQuery = "SELECT MAX(id) FROM orders"
+        orderId = await self.connector.execute(orderIdQuery)
+        print(orderId)
+        orderId = orderId.split(" ")[-1]
+
+        query = f"INSERT INTO photo_delivery (photo, order_id) VALUES('{photo}', '{orderId}')"
         await self.connector.execute(query)
 
     async def updateVolunteerGetOrderStatus(self, idVolunteer, newStatus, pointId=None):
@@ -208,14 +224,3 @@ class Request:
                  f"SET address = '{data['point_address']}', id_district = '{data['point_district']}'"
                  f"WHERE id = '{data['pointId']}'")
         await self.connector.execute(query)
-
-
-    async def getDistrictsInfo(self, id_district=None):
-        if (id_district == None):
-            query = (f"SELECT f.* "
-                 f"FROM districts f ")
-        else:
-            query = (f"SELECT f.* "
-                     f"FROM districts f "
-                     f"WHERE id = '{id_district}'")
-        return await self.connector.fetch(query)

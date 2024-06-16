@@ -103,7 +103,6 @@ async def amoutOfDryCatFood(message: Message, state: FSMContext, request: Reques
         await message.answer(text=f"Такого количества корма у вас нет", reply_markup=gеt_go_menu_keyboard())
     else:
         await state.update_data(raw_dog_food=kgFoodVolunteerhas - int(message.text))
-        await state.update_data(food=int(message.text))
         await state.update_data(raw_dog_food_delivery=int(message.text))
         await state.set_state(FeedAnimalSteps.GET_COMMENT)
         await message.answer(text="Отлично! Данные успешно заполнены!\n"
@@ -126,7 +125,7 @@ async def getPhotoFeedAnimals(message: Message, state: FSMContext, request: Requ
 
     await request.addNewOrderFeed(message.from_user.id, order_data)
     for photo_id in order_data['photos']:
-        await request.InsertNewPhoto(photo_id)
+        await request.InsertNewPhotoDelivery(photo_id)
     await request.updateFoodVolunteer(message.from_user.id, order_data['raw_cat_food'], order_data['dry_cat_food'],
                                       order_data['raw_dog_food'],
                                       order_data['dry_dog_food'])

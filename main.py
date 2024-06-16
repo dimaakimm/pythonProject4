@@ -8,7 +8,7 @@ from core.middlewares.db import DbSession
 
 from core.handlers import (basic, volunteerHandlers, adminHandlers, addPetHandlers, addAdminHandlers,
                            addVolunteerHandlers, volunteerFriendsHandlers,
-                           feedPetsHandlers, takeFoodHandlers, volunteerOrder, pointSettings)
+                           feedPetsHandlers, takeFoodHandlers, volunteerOrder, pointSettings, orderDeliveryHandlers)
 import logging
 
 
@@ -26,6 +26,7 @@ async def start():
         dp.include_router(takeFoodHandlers.router)
         dp.include_router(feedPetsHandlers.router)
         dp.include_router(pointSettings.router)
+        dp.include_router(orderDeliveryHandlers.router)
         dp.include_router(basic.router)
         pool_connect = await asyncpg.create_pool(host=settings.db.host, user=settings.db.user,
                                                  password=settings.db.password, database=settings.db.database,

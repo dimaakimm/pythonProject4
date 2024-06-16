@@ -109,7 +109,7 @@ async def getPhotoOrder(message: Message, state: FSMContext, request: Request):
 
 
 
-    await request.updateVolunteerGetOrderStatus(message.from_user.id, "wait")
+    await request.updateVolunteerGetOrderStatus(message.from_user.id, "busy")
 
 
 async def findOutAmountOfFoodatPointof(type, state: FSMContext):
