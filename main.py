@@ -16,7 +16,6 @@ async def start():
     dp = Dispatcher()
     bot = Bot(token=settings.bots.bot_token, default=DefaultBotProperties(parse_mode='HTML'))
     try:
-        dp.include_router(basic.router)
         dp.include_router(adminHandlers.router)
         dp.include_router(volunteerHandlers.router)
         dp.include_router(addPetHandlers.router)
