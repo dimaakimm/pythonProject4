@@ -208,3 +208,14 @@ class Request:
                  f"SET address = '{data['point_address']}', id_district = '{data['point_district']}'"
                  f"WHERE id = '{data['pointId']}'")
         await self.connector.execute(query)
+
+
+    async def getDistrictsInfo(self, id_district=None):
+        if (id_district == None):
+            query = (f"SELECT f.* "
+                 f"FROM districts f ")
+        else:
+            query = (f"SELECT f.* "
+                     f"FROM districts f "
+                     f"WHERE id = '{id_district}'")
+        return await self.connector.fetch(query)

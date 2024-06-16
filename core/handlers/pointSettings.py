@@ -19,15 +19,33 @@ async def getPointsSettingsList(call: CallbackQuery):
 
 
 @router.callback_query(F.data == "addNewPoint")
-async def stepPointDistrict(call: CallbackQuery, state: FSMContext):
-    await call.message.answer(text='Введите номер округа', reply_markup=goSettingsPointKeyboard())
+async def stepPointDistrict(call: CallbackQuery, state: FSMContext, request: Request):
+    districtsInfo = ('1 - Центральный административный округ (ЦАО)\n'
+                     '2 - Западный административный округ (ЗАО)\n'
+                     '3 - Северо-Западный административный округ (СЗАО)\n'
+                     '4 - Северный административный округ (САО)\n'
+                     '5 - Северо-Восточный административный округ (СВАО)\n'
+                     '6 - Восточный административный округ (ВАО)\n'
+                     '7 - Юго-Восточный административный округ (ЮВАО)\n'
+                     '8 - Южный административный округ (ЮАО)\n'
+                     '9 - Юго-Западный административный округ (ЮЗАО)')
+    await call.message.answer(text='Введите округ(введите соответствующий номер)\n' + districtsInfo, reply_markup=goSettingsPointKeyboard())
     await state.set_state(EditPointsSteps.GET_POINT_DISTRICT)
     await state.update_data(point_action=call.data)
 
 
 @router.callback_query(F.data == "changePointInfo")
 async def stepPointDistrict(call: CallbackQuery, state: FSMContext):
-    await call.message.answer(text='Введите номер округа', reply_markup=goSettingsPointKeyboard())
+    districtsInfo = ('1 - Центральный административный округ (ЦАО)\n'
+                     '2 - Западный административный округ (ЗАО)\n'
+                     '3 - Северо-Западный административный округ (СЗАО)\n'
+                     '4 - Северный административный округ (САО)\n'
+                     '5 - Северо-Восточный административный округ (СВАО)\n'
+                     '6 - Восточный административный округ (ВАО)\n'
+                     '7 - Юго-Восточный административный округ (ЮВАО)\n'
+                     '8 - Южный административный округ (ЮАО)\n'
+                     '9 - Юго-Западный административный округ (ЮЗАО)')
+    await call.message.answer(text='Введите округ(введите соответствующий номер)\n' + districtsInfo, reply_markup=goSettingsPointKeyboard())
     await state.set_state(EditPointsSteps.GET_POINT_DISTRICT)
     await state.update_data(point_action=call.data)
 
@@ -65,7 +83,10 @@ async def showPointInfo(call: CallbackQuery, request: Request, state: FSMContext
     pointInfo = await request.showPointInfo(call.data[13:])
     for record in pointInfo:
         await state.update_data(pointId=record['id'])
-        await call.message.answer(f"На точке по адресу {record['address']}:\n"
+        districtInfo = await request.getDistrictsInfo(record['id_district'])
+        await call.message.answer(f"Информация по точке\n\n"
+                                  f"Округ: {districtInfo[0]['name']}\n"
+                                  f"Адрес: {record['address']}:\n"
                                   f"{record['dry_cat_food']}г сухого корма для кошек\n"
                                   f"{record['wet_cat_food']}г влажного корма для кошек\n"
                                   f"{record['dry_dog_food']}г сухого корма для собак\n"
