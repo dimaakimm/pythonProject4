@@ -1,7 +1,7 @@
 TOKEN = 7328060439:AAE5Wl-zgzfwBjksed_z-qsf488A7SoHxMg
 ADMIN_ID = 697172630
-PGHOST = monorail.proxy.rlwy.net
-PGUSER = postgres
-PGPASSWORD = IKfsvJGKGPofJfuUSOHyUaeXCNcATpYh
-PGDATABASE = railway
-PGPORT = 37016
+PGHOST = rc1b-izxd4gh35ol7t284.mdb.yandexcloud.net
+PGUSER = team
+PGPASSWORD = UwBKdscJaHXbjhDfjqtfe2xwCm35LvKq
+PGDATABASE = maindb
+PGPORT = 6432

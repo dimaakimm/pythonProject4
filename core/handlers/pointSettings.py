@@ -3,15 +3,56 @@ from core.utils.callbackFactories import AddFoodToPoint
 from core.utils.dbConnection import Request
 from aiogram.types import Message, CallbackQuery
 from aiogram.fsm.context import FSMContext
-from core.utils.stateForms import AddFoodToPointSteps
+from core.utils.stateForms import AddFoodToPointSteps, EditPointsSteps
 from core.keyboards.inline import (getInlineKeyboardPointInfo, getInlineKeyboardPointFoodType,
                                    getGoAdmiMenyKeyBoard, getInlineKeyboardPointAddAnotherFood,
-                                   getInlineKeyboardPointsList)
+                                   getInlineKeyboardPointsList, showPointsSettingsList, getGoAdminMenyKeyBoard,
+                                   goSettingsPointKeyboard)
 
 router = Router()
 
 
-@router.callback_query(F.data == "getPointSettings")
+@router.callback_query(F.data == "getPointsSettingsList")
+async def getPointsSettingsList(call: CallbackQuery):
+    await call.message.answer(text='Здесь, вы можете заниматься обновлением и созданием новых точек',
+                              reply_markup=showPointsSettingsList())
+
+
+@router.callback_query(F.data == "addNewPoint")
+async def stepPointDistrict(call: CallbackQuery, state: FSMContext):
+    await call.message.answer(text='Введите номер округа', reply_markup=goSettingsPointKeyboard())
+    await state.set_state(EditPointsSteps.GET_POINT_DISTRICT)
+    await state.update_data(point_action=call.data)
+
+
+@router.callback_query(F.data == "changePointInfo")
+async def stepPointDistrict(call: CallbackQuery, state: FSMContext):
+    await call.message.answer(text='Введите номер округа', reply_markup=goSettingsPointKeyboard())
+    await state.set_state(EditPointsSteps.GET_POINT_DISTRICT)
+    await state.update_data(point_action=call.data)
+
+
+@router.message(EditPointsSteps.GET_POINT_DISTRICT, F.text)
+async def stepPointAddress(message: Message, state: FSMContext):
+    await state.update_data(point_district=message.text)
+    await state.set_state(EditPointsSteps.GET_POINT_ADDRESS)
+    await message.answer(text='Введите адрес точки', reply_markup=goSettingsPointKeyboard())
+
+
+@router.message(EditPointsSteps.GET_POINT_ADDRESS, F.text)
+async def stepPointAdd(message: Message, state: FSMContext, request: Request):
+    await state.update_data(point_address=message.text)
+    pointData = await state.get_data()
+    if pointData["point_action"] == "addNewPoint":
+        await request.insertNewPoint(data=pointData)
+        await message.answer('Точка добавлена!', reply_markup=goSettingsPointKeyboard())
+    elif pointData["point_action"] == "changePointInfo":
+        await request.editPointInfo(data=pointData)
+        await message.answer('Точка изменена!', reply_markup=goSettingsPointKeyboard())
+    await state.clear()
+
+
+@router.callback_query(F.data == "editPoint")
 async def getPointSettings(call: CallbackQuery, request: Request):
     await call.message.answer(text="Выберите нужную точку", reply_markup=getInlineKeyboardPointsList(
         await request.showPinnedPoints(call.from_user.id)

@@ -28,7 +28,7 @@ def getGoAdmiMenyKeyBoard():
 def getInlineStartAdminKeyBoard():
     keyboard_builder = InlineKeyboardBuilder()
     keyboard_builder.button(text='Настройки пользователей', callback_data='getUsersSettings')
-    keyboard_builder.button(text='Настройки пункта', callback_data='getPointSettings')
+    keyboard_builder.button(text='Настройки пунктов', callback_data='getPointsSettingsList')
     keyboard_builder.button(text='Работа с волонтерами', callback_data='getVolunteerWork')
     keyboard_builder.button(text='Выйти из профиля', callback_data='LogOut')
     keyboard_builder.adjust(2)
@@ -140,7 +140,9 @@ def getInlineKeyboardPointsList(allRequests):
 
 def getInlineKeyboardPointInfo():
     keyboard_builder = InlineKeyboardBuilder()
+    keyboard_builder.button(text='Изменить данные точки', callback_data="changePointInfo")
     keyboard_builder.button(text='Добавить корм', callback_data="addFoodToPoint")
+    # keyboard_builder.button(text='Удалить точку', callback_data="deletePoint")
     keyboard_builder.button(text='Назад', callback_data='goAdminMenu')
     keyboard_builder.adjust(1)
     return keyboard_builder.as_markup(one_time_keyboard=True)
@@ -180,5 +182,19 @@ def choosePetSterilized():
     keyboard_builder.button(text='Да', callback_data="sterilized")
     keyboard_builder.button(text='Нет', callback_data="not_sterilized")
     keyboard_builder.button(text='Назад', callback_data="goVolunteerMenu")
+    keyboard_builder.adjust(1)
+    return keyboard_builder.as_markup(one_time_keyboard=True)
+
+def showPointsSettingsList():
+    keyboard_builder = InlineKeyboardBuilder()
+    keyboard_builder.button(text='Добавить новую точку', callback_data="addNewPoint")
+    keyboard_builder.button(text='Изменить точку', callback_data="editPoint")
+    keyboard_builder.button(text='Назад', callback_data="goAdminMenu")
+    keyboard_builder.adjust(1)
+    return keyboard_builder.as_markup(one_time_keyboard=True)
+
+def goSettingsPointKeyboard():
+    keyboard_builder = InlineKeyboardBuilder()
+    keyboard_builder.button(text='К настройкам пунктов', callback_data='getPointsSettingsList')
     keyboard_builder.adjust(1)
     return keyboard_builder.as_markup(one_time_keyboard=True)

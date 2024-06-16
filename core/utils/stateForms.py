@@ -79,3 +79,8 @@ class  FeedAnimalSteps(StatesGroup):
     GET_COMMENT = State()
     GET_PHOTO = State()
     DONE = State()
+
+
+class EditPointsSteps(StatesGroup):
+    GET_POINT_DISTRICT = State()
+    GET_POINT_ADDRESS = State()

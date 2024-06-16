@@ -197,3 +197,14 @@ class Request:
         else:
             query = f"UPDATE volunteers SET point_id = DEFAULT WHERE id = '{idVolunteer}'"
         await self.connector.execute(query)
+
+    async def insertNewPoint(self, data):
+        query = (f"INSERT INTO points (address, id_district) "
+                               f"VALUES('{data['point_address']}', '{data['point_district']}')")
+        await self.connector.execute(query)
+
+    async def editPointInfo(self, data):
+        query = (f"UPDATE points "
+                 f"SET address = '{data['point_address']}', id_district = '{data['point_district']}'"
+                 f"WHERE id = '{data['pointId']}'")
+        await self.connector.execute(query)
