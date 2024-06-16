@@ -53,14 +53,14 @@ async def addPetName(message: Message, state: FSMContext):
     await state.update_data(district=message.text)
     await state.set_state(VolStepsFormAddPet.GET_CONFIRM)
     form_data = await state.get_data()
-    await message.answer_photo(caption=f"В анкете все верно?\n1 -yes\nИмя: {form_data['name']}\nИнформация: {form_data['info']}\nСтерилизована: {form_data['is_sterilized']} \nРайон: {form_data['district']}\n", photo=form_data['photo_id'], reply_markup=petCreateSuccesfulKeyBoard())
+    await message.answer_photo(caption=f"В анкете все верно?\n1 -yes\nИмя: {form_data['name']}\nИнформация: {form_data['info']}\nСтерилизован/на: {form_data['is_sterilized']} \nРайон: {form_data['district']}\n", photo=form_data['photo_id'], reply_markup=petCreateSuccesfulKeyBoard())
 
 
 @router.callback_query(VolStepsFormAddPet.GET_CONFIRM, F.data == "createPetSuccesful")
-async def addPetName(call: CallbackQuery, message: Message, state: FSMContext, request: Request):
+async def addPetName(call: CallbackQuery, state: FSMContext, request: Request):
     await state.set_state(None)
     form_data = await state.get_data()
-    await request.add_data_pet(form_data, message.from_user.id)
-    await message.answer(text=f"Вы успешно добавили питомца!", reply_markup=gеt_go_menu_keyboard())
+    await request.add_data_pet(form_data, call.from_user.id)
+    await call.message.answer(text=f"Вы успешно добавили питомца!", reply_markup=gеt_go_menu_keyboard())
     await call.answer()
 

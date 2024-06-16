@@ -23,7 +23,8 @@ async def showProfile(call: CallbackQuery, request: Request):
 
     allRequestsVol = await request.showProfile(call.from_user.id)
     requestBalance = await request.showVolunteerBalance(call.from_user.id)
-
+    print(allRequestsVol)
+    print(requestBalance)
     result = showVolunteerProfileMessage(allRequestsVol, requestBalance)
 
     messageToSend = result[0]
@@ -66,7 +67,7 @@ def showVolunteerProfileMessage(allRequests, requestBalance):
     for record in allRequests:
         message += f"Имя: {record['forename']}\nФамилия: {record['surname']}\nId: {record['id']}\nПочта: {record['email']}\nТелефон: {record['phone_number']}\n"
     for record in requestBalance:
-        message += (f"\nКоличество корма:\n"
+        message += (f"\nКоличество корма(кг):\n"
                     f"Сухого корма для кошек: {record['dry_cat_food']}\n"
                     f"Влажного корма для кошек: {record['raw_cat_food']}\n"
                     f"Сухого корма для собак: {record['dry_dog_food']}\n"
