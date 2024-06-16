@@ -22,7 +22,7 @@ async def getProfile(message: Message, state: FSMContext, request: Request):
     messageToSend = showVolunteerProfileMessage(await request.showProfile(message.from_user.id))[0]
     photo_id = showVolunteerProfileMessage(await request.showProfile(message.from_user.id))[1]
     volunteerId = showVolunteerProfileMessage(await request.showProfile(message.from_user.id))[2]
-    volunteerFoodInfo = (await request.getVolunteerFoodById(volunteerId))
+    volunteerFoodInfo = (await request.getVolunteerFoodById(volunteerId))[0]
     await state.update_data(toId=volunteerId)
     await state.update_data(food=volunteerFoodInfo)
     await message.answer_photo(caption=messageToSend, photo=photo_id, reply_markup=gеt_volunteer_keyboard())
@@ -95,9 +95,6 @@ async def getPhotoOrder(message: Message, state: FSMContext, request: Request, b
 
 async def findOutAmountOfFoodVolunteer(type, state: FSMContext):
     data = await state.get_data()
-    print(data)
-    print(data['food'][type])
-    print(int(data['food'][type]))
     return int(data['food'][type])
 
 

@@ -71,6 +71,7 @@ async def getPointSettings(call: CallbackQuery, request: Request):
     await call.message.answer(text="Выберите нужную точку", reply_markup=getInlineKeyboardPointsList(
         await request.showPinnedPoints(call.from_user.id)
     ))
+    print(request.showPinnedPoints(call.from_user.id))
 
 
 @router.callback_query(F.data.startswith('showPointInfo'))
