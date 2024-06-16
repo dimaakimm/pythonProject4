@@ -42,3 +42,7 @@ async def loginAsVolunteer(call: CallbackQuery, request: Request):
         await call.message.answer(f'Тебя нет в списке волонтеров(',
                                   reply_markup=gеtStartKeyboard())
     await call.answer()
+
+@router.message(F.text)
+async def noHandler(message: Message):
+    await message.answer("Извините, я вас не понимаю")

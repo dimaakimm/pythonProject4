@@ -27,6 +27,7 @@ async def start():
         dp.include_router(takeFoodHandlers.router)
         dp.include_router(feedPetsHandlers.router)
         dp.include_router(addFoodToPoint.router)
+        dp.include_router(basic.router)
         pool_connect = await asyncpg.create_pool(host=settings.db.host, user=settings.db.user,
                                                  password=settings.db.password, database=settings.db.database,
                                                  port=settings.db.port, command_timeout=60)
